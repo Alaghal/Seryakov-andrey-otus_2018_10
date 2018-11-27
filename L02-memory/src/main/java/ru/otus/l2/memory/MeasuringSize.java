@@ -68,18 +68,24 @@ public class MeasuringSize {
 
     static <T> long measure(Supplier<T> objectGetter) {
         Object[] array = new Object[ARRAY_SIZE];
-        long size;
-        long mem1 = getMem();
-        if (objectGetter == null) {
-            size = (getMem() - mem1) / array.length;
-            System.out.println("Element size: " + size + " len:" + array.length);
-        } else {
-            for (int i = 0; i < array.length; i++) {
-                array[i] = objectGetter.get();
-            }
 
-            size = (getMem() - mem1) / array.length;
-            System.out.println("Element size: " + size + " len:" + array.length);
+        long size = 0;
+        long mem1 = getMem();
+        try {
+            if (objectGetter == null) {
+                size = (getMem() - mem1) / array.length;
+                System.out.println("Element size: " + size + " len:" + array.length);
+            } else {
+                for (int i = 0; i < array.length; i++) {
+                    array[i] = objectGetter.get();
+                }
+
+                size = (getMem() - mem1) / array.length;
+                System.out.println("Element size: " + size + " len:" + array.length);
+            }
+        }
+        catch (Exception e){
+
         }
         return size;
     }
