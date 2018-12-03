@@ -46,9 +46,7 @@ public class MyArrayList<E> extends ArrayList<E> implements List<E> {
         return new MyArrayList.Itr();
     }
 
-    /**
-     * An optimized version of AbstractList.Itr
-     */
+
     private class Itr implements Iterator<E> {
         int cursor;       // index of next element to return
         int lastRet = -1; // index of last element returned; -1 if no such
@@ -245,7 +243,7 @@ public class MyArrayList<E> extends ArrayList<E> implements List<E> {
                 MyArrayList clone = null;
                 try {
                     clone = (MyArrayList<E>) super.clone();
-                    ((MyArrayList) clone).data = (E[]) data.clone();
+                    (clone).data = data.clone();
                 } catch (Exception e) {
 
                 }

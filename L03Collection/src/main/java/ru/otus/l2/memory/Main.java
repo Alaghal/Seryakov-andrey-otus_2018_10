@@ -5,31 +5,30 @@ import java.util.*;
 public class Main {
     public static void main(String... args){
 
-
         List<Integer> ls = new ArrayList<Integer> ();
-        ls.add(3);
-        ls.add(5);
-        ls.add(6);
-        ls.add(8);
-        ls.add(0);
+
+        for(int i= 0; i<120; i++){
+            ls.add(i);
+        }
+
+        List <Integer> mls = new MyArrayList<Integer>();
+        for(int i=0; i<120; i++ )
+        {
+            mls.add(i+1);
+        }
 
 
 
+        boolean  b =  Collections.addAll(mls,122,555,12,74,82,8);
+        System.out.println(mls);
 
-       List <Integer> mls = new MyArrayList<Integer>();
+        Collections.copy(mls,ls);
+        System.out.println(mls);
 
-        boolean  b =  Collections.addAll(mls,1,2,3,4,5,8);
+        Collections.sort(mls);
         System.out.println(mls);
 
 
-        //Collections.copy(mls,ls);
-
-     //   MyArrayList.copy(mls,ls);
-     //  MyArrayList.sort(mls, new IntegerComparator());
-
-       // System.out.println(mls);
-
-      //  MyArrayList.cop
 
 
 
@@ -39,18 +38,4 @@ public class Main {
 
 }
 
-class IntegerComparator implements Comparator<Integer> {
 
-
-    @Override
-    public int compare(Integer o1, Integer o2) {
-
-        if((int)o1 > (int)o2) {
-            return 1;
-        }
-        else if( (int)o1 < (int)o2)
-            return -1;
-        else
-            return 0;
-    }
-}
