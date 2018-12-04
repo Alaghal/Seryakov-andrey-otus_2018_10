@@ -1,6 +1,10 @@
 package ru.otus.l2.memory;
 
 import java.lang.management.ManagementFactory;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.RandomAccess;
 import java.util.function.Supplier;
 
 public class MeasuringSize {
@@ -99,5 +103,30 @@ public class MeasuringSize {
         }
         Runtime runtime = Runtime.getRuntime();
         return runtime.totalMemory() - runtime.freeMemory();
+    }
+
+    private static final int COPY_THRESHOLD           =   10;
+
+    public  <T> void copy (List<? super  T> dest, List<? extends  T> src){
+        int srcSize = src.size();
+        if (srcSize > dest.size())
+            throw new IndexOutOfBoundsException("Source does not fit in dest");
+
+        if (srcSize < COPY_THRESHOLD ||
+                (src instanceof RandomAccess && dest instanceof RandomAccess)) {
+            for (int i=0; i<srcSize; i++)
+                dest.set(i, src.get(i));
+        } else {
+            ListIterator<? super T> di=dest.listIterator();
+            ListIterator<? extends T> si=src.listIterator();
+            for (int i=0; i<srcSize; i++) {
+                di.next();
+                di.set(si.next());
+            }
+        }
+    }
+
+    public static <T> void sort(List<T> list, Comparator<? super T> c) {
+        list.sort(c);
     }
 }

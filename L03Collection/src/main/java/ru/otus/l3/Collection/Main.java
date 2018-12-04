@@ -1,4 +1,4 @@
-package ru.otus.l2.memory;
+package ru.otus.l3.Collection;
 
 import java.util.*;
 
@@ -20,13 +20,13 @@ public class Main {
 
 
         boolean  b =  Collections.addAll(mls,122,555,12,74,82,8);
-        System.out.println(mls);
+        print(mls);
 
         Collections.copy(mls,ls);
-        System.out.println(mls);
+        print(mls);
 
         Collections.sort(mls);
-        System.out.println(mls);
+        print(mls);
 
 
 
@@ -35,6 +35,12 @@ public class Main {
 
     }
 
+    public static void print(List ar){
+        for(var i : ar){
+            System.out.print(i+" ");
+        }
+        System.out.println(" ");
+    }
 
 }
 
