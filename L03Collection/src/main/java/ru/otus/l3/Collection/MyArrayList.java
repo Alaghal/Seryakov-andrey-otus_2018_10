@@ -5,12 +5,10 @@ import java.util.function.Consumer;
 
 public class MyArrayList<E> implements List<E> {
 
-    private int size;
-
     private static final int DEFAULT_CAPACITY = 10;
-
-    private transient E[] data;
     protected transient int modCount = 0;
+    private int size;
+    private transient E[] data;
 
     public MyArrayList() {
         this(DEFAULT_CAPACITY);
@@ -23,6 +21,9 @@ public class MyArrayList<E> implements List<E> {
         data = (E[]) new Object[capacity];
     }
 
+    static <E> E elementAt(Object[] es, int index) {
+        return (E) es[index];
+    }
 
     public int size() {
 
@@ -38,10 +39,6 @@ public class MyArrayList<E> implements List<E> {
         return indexOf(o) != -1;
     }
 
-    static <E> E elementAt(Object[] es, int index) {
-        return (E) es[index];
-    }
-
     public Iterator<E> iterator() {
         return new MyArrayList.Itr();
     }
@@ -50,9 +47,6 @@ public class MyArrayList<E> implements List<E> {
     public Object[] toArray() {
         return Arrays.copyOf(data, size);
     }
-
-
-
 
 
     public boolean add(E o) {
@@ -77,7 +71,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     public boolean remove(Object o) {
-        throw new  UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     public boolean addAll(Collection<? extends E> c) {
@@ -145,7 +139,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     public int indexOf(Object o) {
-        throw new  UnsupportedOperationException();
+        throw new UnsupportedOperationException();
     }
 
     public int lastIndexOf(Object o) {
