@@ -143,7 +143,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     public int lastIndexOf(Object o) {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
     public ListIterator<E> listIterator() {
@@ -155,19 +155,19 @@ public class MyArrayList<E> implements List<E> {
     }
 
     public List subList(int fromIndex, int toIndex) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     public boolean retainAll(Collection c) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     public boolean removeAll(Collection c) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     public boolean containsAll(Collection c) {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     public Object clone() {
@@ -195,11 +195,11 @@ public class MyArrayList<E> implements List<E> {
     }
 
     private class Itr implements Iterator<E> {
-        int cursor;       // index of next element to return
-        int lastRet = -1; // index of last element returned; -1 if no such
+        int cursor;
+        int lastRet = -1;
         int expectedModCount = modCount;
 
-        // prevent creating a synthetic constructor
+
         Itr() {
         }
 
@@ -246,7 +246,7 @@ public class MyArrayList<E> implements List<E> {
                     throw new ConcurrentModificationException();
                 for (; i < size && modCount == expectedModCount; i++)
                     action.accept(elementAt(es, i));
-                // update once at end to reduce heap write traffic
+             
                 cursor = i;
                 lastRet = i - 1;
                 checkForComodification();
