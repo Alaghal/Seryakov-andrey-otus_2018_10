@@ -183,7 +183,7 @@ public class MyArrayList<E> implements List<E> {
 
 
     public Object[] toArray(Object[] a) {
-        return new Object[0];
+        throw new UnsupportedOperationException();
     }
 
     public void sort(Comparator<? super E> c) {
@@ -246,7 +246,7 @@ public class MyArrayList<E> implements List<E> {
                     throw new ConcurrentModificationException();
                 for (; i < size && modCount == expectedModCount; i++)
                     action.accept(elementAt(es, i));
-             
+
                 cursor = i;
                 lastRet = i - 1;
                 checkForComodification();
