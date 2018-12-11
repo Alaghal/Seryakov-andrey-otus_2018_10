@@ -1,4 +1,4 @@
-package ru.otus.l4.Framework;
+package ru.otus.l4.Framework.MyTestFraemwork;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
