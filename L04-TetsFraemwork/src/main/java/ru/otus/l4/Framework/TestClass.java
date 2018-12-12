@@ -13,8 +13,8 @@ public class TestClass {
     }
 
     @Test
-     public  void Sum(int a, int b){
-         System.out.println(a+b);
+     public  void Sum(){
+         System.out.println("Summ");
      }
 
      @Test
@@ -29,7 +29,7 @@ public class TestClass {
 
      @Test
      public  void GetPuls(){
-         System.out.println("GetPuls");
+         System.out.println("GetTest");
      }
 
      @Before
