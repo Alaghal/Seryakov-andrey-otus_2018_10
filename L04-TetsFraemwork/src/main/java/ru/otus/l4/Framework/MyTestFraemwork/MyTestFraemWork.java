@@ -13,9 +13,9 @@ public class MyTestFraemWork {
 
         clazz = typeClass;
 
-        CallAllMetodsWithAnnotation("Before");
-        CallAllMetodsWithAnnotation("Test");
-        CallAllMetodsWithAnnotation("After");
+        CallAllMetodsWithAnnotation("@ru.otus.l4.Framework.MyTestFraemwork.Before()");
+        CallAllMetodsWithAnnotation("@ru.otus.l4.Framework.MyTestFraemwork.Test()");
+        CallAllMetodsWithAnnotation("@ru.otus.l4.Framework.MyTestFraemwork.After()");
 
 
 
@@ -25,7 +25,9 @@ public class MyTestFraemWork {
         List<Method> listMethodsAnnotation = GetListMethodsAnnotation(nameAnnotation);
         for (Method m : listMethodsAnnotation) {
             var clazzForCallMethod = HelperOtus.instantiate(clazz);
+
             HelperOtus.callMethod(clazzForCallMethod,m.getName());
+
 
         }
     }
@@ -39,7 +41,7 @@ public class MyTestFraemWork {
         for (Method method : classMethods) {
             Annotation[] annotations = method.getDeclaredAnnotations();
             for (Annotation annotation : annotations) {
-                if (annotation.toString() == nameAnnotation) {
+                if (annotation.toString().equals(nameAnnotation)) {
                     listMethodsAnnotation.add(method);
                 }
             }
