@@ -9,9 +9,9 @@ public class MyTestFraemWork {
 
     Class<?> clazz;
 
-    public void Run(String pathClass) throws ClassNotFoundException {
+    public void Run(Class typeClass) {
 
-        clazz = Class.forName(pathClass);
+        clazz = typeClass;
 
         CallAllMetodsWithAnnotation("Before");
         CallAllMetodsWithAnnotation("Test");
