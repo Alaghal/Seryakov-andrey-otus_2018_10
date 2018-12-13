@@ -18,21 +18,21 @@ public class TestClass {
 
     @Test
     public void getName() {
-        System.out.println("getName");
+        System.out.println("getTest3");
     }
 
     @Test
     public void getData() {
-        System.out.println("getData");
+        System.out.println("getTest2");
     }
 
     @Test
     public void getPuls() {
-        System.out.println("GetTest");
+        System.out.println("GetTest1");
     }
 
     @After
     public void writeMessage() {
-        System.out.println("getPuls");
+        System.out.println("getAfter");
     }
 }
