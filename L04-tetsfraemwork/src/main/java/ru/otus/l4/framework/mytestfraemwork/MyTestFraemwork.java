@@ -16,7 +16,6 @@ public class MyTestFraemwork {
 
     public void run(Class typeClass) {
         clazz = typeClass;
-
         callTestMetods();
     }
 
@@ -24,18 +23,15 @@ public class MyTestFraemwork {
         List<Method> listMethodsAnnotation = getListMethodsAnnotation(Test.class);
         for (Method m : listMethodsAnnotation) {
             var objectForTest = ReflectionHelper.instantiate(clazz);
-
             objectForTest = callBeforeMetod(objectForTest);
             ReflectionHelper.callMethod(objectForTest, m.getName());
             callAfteMetod(objectForTest);
         }
-
     }
 
     private Object callBeforeMetod (Object testObject){
         List<Method> listMethodsAnnotation = getListMethodsAnnotation(Before.class);
         for (Method m : listMethodsAnnotation) {
-
             ReflectionHelper.callMethod(testObject, m.getName());
         }
 
@@ -45,13 +41,11 @@ public class MyTestFraemwork {
     private void callAfteMetod(Object testOject){
         List<Method> listMethodsAnnotation = getListMethodsAnnotation(After.class);
         for (Method m : listMethodsAnnotation) {
-
             ReflectionHelper.callMethod(testOject, m.getName());
         }
     }
 
     private List<Method> getListMethodsAnnotation(Class annotationClass) {
-
         List<Method> listMethodsAnnotation = new ArrayList<>();
         Method[] classMethods = clazz.getMethods();
         for (Method method : classMethods) {

@@ -10,7 +10,6 @@ public class TestClass {
     public void hello() {
         System.out.println("hello");
     }
-
     @Test
     public void sum() {
         System.out.println("Summ");
