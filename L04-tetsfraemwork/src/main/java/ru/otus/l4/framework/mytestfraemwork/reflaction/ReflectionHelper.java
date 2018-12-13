@@ -1,4 +1,4 @@
-package ru.otus.l4.Framework.MyTestFraemwork;
+package ru.otus.l4.framework.mytestfraemwork.reflaction;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -9,8 +9,8 @@ import java.util.Arrays;
  * Created by tully.
  */
 @SuppressWarnings("SameParameterValue")
-public class HelperOtus {
-    private HelperOtus() {
+public class ReflectionHelper {
+    private ReflectionHelper() {
     }
 
     public static <T> T instantiate(Class<T> type, Object... args) {
