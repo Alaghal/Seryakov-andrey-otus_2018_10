@@ -1,21 +1,24 @@
-package ru.otus.l4.framework.mytestfraemwork;
+package ru.otus.l4.framework.mytestframework;
 
-import ru.otus.l4.framework.mytestfraemwork.annotations.After;
-import ru.otus.l4.framework.mytestfraemwork.annotations.Before;
-import ru.otus.l4.framework.mytestfraemwork.annotations.Test;
-import ru.otus.l4.framework.mytestfraemwork.reflaction.ReflectionHelper;
+import ru.otus.l4.framework.mytestframework.annotations.After;
+import ru.otus.l4.framework.mytestframework.annotations.Before;
+import ru.otus.l4.framework.mytestframework.annotations.Test;
+import ru.otus.l4.framework.mytestframework.reflaction.ReflectionHelper;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyTestFraemwork {
+public class MyTestFramework {
 
     private Class<?> clazz;
 
-    public void run(Class typeClass) {
-        clazz = typeClass;
+    public  MyTestFramework(Class typeClass){
+        this.clazz = typeClass;
+    }
+
+    public void run() {
         callTestMetods();
     }
 

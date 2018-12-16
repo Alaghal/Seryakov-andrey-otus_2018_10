@@ -1,12 +1,12 @@
 package ru.otus.l4.framework.test;
 
-import ru.otus.l4.framework.mytestfraemwork.MyTestFraemwork;
+import ru.otus.l4.framework.mytestframework.MyTestFramework;
 
 public class TestRunner {
 
     public static void main(String[] args) {
-        MyTestFraemwork tester = new MyTestFraemwork();
-        tester.run(TestClass.class);
+        MyTestFramework tester = new MyTestFramework(TestClass.class);
+        tester.run();
     }
 
 }

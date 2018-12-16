@@ -1,8 +1,8 @@
 package ru.otus.l4.framework.test;
 
-import ru.otus.l4.framework.mytestfraemwork.annotations.After;
-import ru.otus.l4.framework.mytestfraemwork.annotations.Before;
-import ru.otus.l4.framework.mytestfraemwork.annotations.Test;
+import ru.otus.l4.framework.mytestframework.annotations.After;
+import ru.otus.l4.framework.mytestframework.annotations.Before;
+import ru.otus.l4.framework.mytestframework.annotations.Test;
 
 public class TestClass {
 

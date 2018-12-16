@@ -1,4 +1,4 @@
-package ru.otus.l4.framework.mytestfraemwork.annotations;
+package ru.otus.l4.framework.mytestframework.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,5 +7,5 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
-public @interface Before {
+public @interface After {
 }

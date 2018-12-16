@@ -1,4 +1,4 @@
-package ru.otus.l4.framework.mytestfraemwork.reflaction;
+package ru.otus.l4.framework.mytestframework.reflaction;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
