@@ -12,13 +12,25 @@ import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
+import java.util.logging.Logger;
 public class Main {
 
-    static int countGC=0;
+    static int countGCMinor =0;
+    static int countGCMajor =0;
+    static long timeStartGCOperations=0;
+    private static Logger logger = Logger.getLogger(Main.class.getName());
 
     public static void main(String... args) throws Exception {
+        try {
+            System.setErr(new PrintStream(new File("log\\logSerial.txt")));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+       logger.info("MainER");
+
         System.out.println("Starting pid: " + ManagementFactory.getRuntimeMXBean().getName());
         // switchOnMonitoring();
         long beginTime = System.currentTimeMillis();
@@ -29,14 +41,14 @@ public class Main {
 
         while (true) {
 
-
-
             for (int i = 0; i < countetSizeList; i++) {
                 listInt.add(i);
+
             }
-            for (int i = countetSizeList - 5000; i > 5000; i--) {
+            Thread.sleep(1500);
+/*            for (int i = countetSizeList - 5000; i > 5000; i--) {
                 listInt.remove(i);
-            }
+           }*/
 
             countetSizeList += 1000;
             counterTurn += 1;
@@ -49,19 +61,10 @@ public class Main {
 
     private static void switchOnMonitoring() {
 
-        try {
-            System.setErr(new PrintStream(new File("log\\log.txt")));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-// Выводим сообщения
-    //    System.err.println("Сообщение 1");
-     //   System.err.println("Сообщение 2");
-
         List<GarbageCollectorMXBean> gcbeans = java.lang.management.ManagementFactory.getGarbageCollectorMXBeans();
         for (GarbageCollectorMXBean gcbean : gcbeans) {
             System.out.println("GC name:" + gcbean.getName());
+
             NotificationEmitter emitter = (NotificationEmitter) gcbean;
             NotificationListener listener = (notification, handback) -> {
                 if (notification.getType().equals(GarbageCollectionNotificationInfo.GARBAGE_COLLECTION_NOTIFICATION)) {
@@ -73,12 +76,20 @@ public class Main {
                     long startTime = info.getGcInfo().getStartTime();
                     long duration = info.getGcInfo().getDuration();
 
-                    System.out.println("start:" + startTime + " Name:" + gcName + ", action:" + gcAction + ", gcCause:" + gcCause + "(" + duration + " ms)");
-                    //loger.info("start:" + startTime + " Name:" + gcName + ", action:" + gcAction + ", gcCause:" + gcCause + "(" + duration + " ms)");
-                    countGC+=1;
-                    System.out.println("CountGC  " + countGC);
+                      if(startTime!=timeStartGCOperations){
+                          if(gcAction.equals("end of minor GC")){
+                              countGCMinor +=1;
+                          }else if(gcAction.equals("end of major GC")) {
+                                    countGCMajor += 1;
+                                }
+                          logger.info("Minor acting GC  " + countGCMinor + " Time this acting GC: "+duration+" ms");
+                          logger.info("Major acting GC  " + countGCMajor + " Time this acting GC: "+duration+" ms");
+                      }
+
+                    timeStartGCOperations =startTime;
                 }
             };
+
             emitter.addNotificationListener(listener, null, null);
         }
     }
