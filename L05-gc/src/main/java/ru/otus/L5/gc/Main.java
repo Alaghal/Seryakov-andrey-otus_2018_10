@@ -28,7 +28,7 @@ public class Main {
 
     public static void main(String... args) throws Exception {
         try {
-            System.setErr(new PrintStream(new File("log\\logG1.txt")));
+            System.setErr(new PrintStream(new File("log\\logSerial.txt")));
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
