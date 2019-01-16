@@ -5,5 +5,5 @@ package ru.otus.l6.cacheForHW;
  * created on 14.12.18.
  */
 public interface HwListener<K, V> {
-    void notify1(K key, V value, String action);
+    void notify(K key, V value, String action);
 }

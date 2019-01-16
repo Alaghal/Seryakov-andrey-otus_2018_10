@@ -16,7 +16,7 @@ public class MyCache<K, V> implements HwCache<K, V> {
 //Надо реализовать эти методы
     private final Map<K,SoftValue <V>> elementCache;
     private ReferenceQueue<V> queue = new ReferenceQueue<V>();
-    private final List<SoftReference<HwListener>> listenersList;
+    private final List<HwListener> listenersList;
 
     MyCache(){
         elementCache  = new HashMap<>();
@@ -40,15 +40,16 @@ public class MyCache<K, V> implements HwCache<K, V> {
     public void put(K key, V value) {
         processQueue();
         elementCache.put(key, new SoftValue<V>(value, queue, key));
-        listenersList.stream().forEach(i-> System.out.println("key:" + key + ", value:" + get(key) + " action: put"));
+        listenersList.forEach(i-> i.notify(key,value,"Put"));
 
     }
 
     @Override
     public void remove(K key) {
+        listenersList.forEach(i->i.notify(key, get(key),"Remove") );
         processQueue();
         elementCache.remove(key);
-        listenersList.stream().forEach(i-> System.out.println("key:" + key + ", value:" + get(key) + " action: remove"));
+
     }
 
     @Override
@@ -64,7 +65,7 @@ public class MyCache<K, V> implements HwCache<K, V> {
 
     @Override
     public void addListener(HwListener listener) {
-         listenersList.add(new SoftReference<>(listener));
+         listenersList.add(listener);
     }
 
     @Override
