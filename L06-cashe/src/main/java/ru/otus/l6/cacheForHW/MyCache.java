@@ -9,8 +9,8 @@ import java.util.Map;
 
 
 public class MyCache<K, V> implements HwCache<K, V> {
-    
-    private final Map<SoftReference<K>,SoftReference<V>> elementCache;
+
+    private final Map<K,SoftReference<V>> elementCache;
     private final List<HwListener> listenersList;
 
     MyCache(){
@@ -20,14 +20,23 @@ public class MyCache<K, V> implements HwCache<K, V> {
 
     @Override
     public void put(K key, V value) {
-        elementCache.put( new SoftReference(key), new SoftReference (value));
-        listenersList.forEach(i-> i.notify(key,value,"Put"));
+        elementCache.put( key, new SoftReference (value));
+        try{
+            listenersList.forEach(i-> i.notify(key,value,"Put"));
+        }catch(Exception e) {
+            System.out.println("error" + e.getMessage());
+        }
 
     }
 
     @Override
     public void remove(K key) {
-        listenersList.forEach(i->i.notify(key, get(key),"Remove") );
+        try{
+            listenersList.forEach(i->i.notify(key, get(key),"Remove") );
+        }catch(Exception e) {
+            System.out.println("error" + e.getMessage());
+        }
+        
         elementCache.remove(key);
 
     }
