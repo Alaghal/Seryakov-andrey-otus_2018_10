@@ -1,4 +1,4 @@
-package ru.otus.l3.Collection;
+package ru.otus.l2;
 
 import java.lang.management.ManagementFactory;
 import java.util.Comparator;

@@ -36,7 +36,7 @@ public class MyCache<K, V> implements HwCache<K, V> {
         }catch(Exception e) {
             System.out.println("error" + e.getMessage());
         }
-        
+
         elementCache.remove(key);
 
     }
