@@ -2,11 +2,9 @@ package ru.otus.l7.ATM.ATM;
 
 import ru.otus.l7.ATM.interfaces.Command;
 
-import java.util.Arrays;
 
 public class ControlPanel {
-    Command[] onCommands;
-    Command undoCommand;
+  private   Command[] onCommands;
 
     public ControlPanel(){
         onCommands = new Command[2];
