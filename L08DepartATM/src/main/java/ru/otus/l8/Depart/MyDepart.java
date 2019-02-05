@@ -5,7 +5,7 @@ import ru.otus.l8.Depart.Interface.DepartATM;
 
 import java.util.List;
 
-public class MyDepartemnt implements DepartATM {
+public class MyDepart implements DepartATM {
     @Override
     public List<ATM> getCurrentAtms() {
         return null;
