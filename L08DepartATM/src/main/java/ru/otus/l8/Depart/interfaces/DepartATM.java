@@ -1,4 +1,4 @@
-package ru.otus.l8.Depart.Interface;
+package ru.otus.l8.Depart.interfaces;
 
 import ru.otus.l7.ATM.interfaces.ATM;
 
