@@ -53,6 +53,7 @@ public class MyATM implements ATM {
     @Override
     public void StartATM() {
         conditionATM = StatusATM.Working;
+        InitCassette();
     }
 
     @Override
@@ -79,9 +80,10 @@ public class MyATM implements ATM {
     }
 
     @Override
-    public void GetAmountOfAccount(int numberAccount) {
-          throw new UnsupportedOperationException();
+    public int GetRestMoneyATM() {
+        throw new UnsupportedOperationException();
     }
+
 
     private Cassette checkMinBanknoteForAmount(Cassette lastCassette) {
         if (lastCassette.getCountBanknotesCassette() > 0) {
