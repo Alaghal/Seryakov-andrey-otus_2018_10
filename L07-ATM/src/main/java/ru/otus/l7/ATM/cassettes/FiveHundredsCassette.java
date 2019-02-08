@@ -2,7 +2,7 @@ package ru.otus.l7.ATM.cassettes;
 
 public class FiveHundredsCassette extends Cassette {
 
-     public FiveHundredsCassette(int sizeCassette){
+    public FiveHundredsCassette(int sizeCassette){
          setSizeCassette(sizeCassette);
      }
 

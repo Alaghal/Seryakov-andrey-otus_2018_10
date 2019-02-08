@@ -3,12 +3,14 @@ package ru.otus.l7.ATM.ATM;
 import ru.otus.l7.ATM.enums.StatusATM;
 import ru.otus.l7.ATM.cassettes.*;
 import ru.otus.l7.ATM.interfaces.ATM;
+import ru.otus.l7.ATM.interfaces.EventListener;
 
 import java.util.*;
 
 public class MyATM implements ATM {
     private List<Cassette> listCassette;
     private StatusATM conditionATM;
+    private int restMoneyATM;
 
     public MyATM() {
         listCassette = new ArrayList<>();
@@ -24,8 +26,6 @@ public class MyATM implements ATM {
 
         listCassette.sort(new CassetteComparator());
         listCassette = makingChainCassette(listCassette);
-
-
     }
 
     private List<Cassette> makingChainCassette(List<Cassette> list) {
@@ -80,8 +80,8 @@ public class MyATM implements ATM {
     }
 
     @Override
-    public int GetRestMoneyATM() {
-        throw new UnsupportedOperationException();
+    public int getRestMoneyATM() {
+        return  restMoneyATM;
     }
 
 
@@ -104,6 +104,19 @@ public class MyATM implements ATM {
                 "At the moment, the minimum banknote " + lastCassette.getNomenal() + " р.");
 
         return false;
+    }
+
+    @Override
+    public void update(String eventType) {
+        if(eventType =="PrepareForGetAmountMoneyATM"){
+            for (var cassette: listCassette) {
+                restMoneyATM+= cassette.getNomenal() * cassette.getCountBanknotesCassette();
+            }
+        } else
+        if(eventType =="SetOriginalConditionATM"){
+            StartATM();
+        }
+
     }
 
     class CassetteComparator implements Comparator<Cassette> {
