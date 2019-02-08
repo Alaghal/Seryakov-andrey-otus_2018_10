@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 class MyDepartTest {
@@ -16,24 +15,21 @@ class MyDepartTest {
     void getCurrentAtms() {
         ATM a = mock(ATM.class);
         ATM b = mock(ATM.class);
-        MyDepart departmentATM = new MyDepart();
-        departmentATM.addATM(a);
-        departmentATM.addATM(b);
-        departmentATM.removeATM(a);
-
-
-        List<ATM> expectedList = new ArrayList<>();
-        expectedList = departmentATM.getCurrentAtms();
-
-
+        ATM c = mock(ATM.class);
         List<ATM>  actual = new ArrayList<>( );
         actual.add(a);
         actual.add(b);
+        actual.add(c);
         actual.remove(b);
 
-        assertEquals( expectedList, actual );
+        MyDepart departmentATM = new MyDepart();
+        departmentATM.addATM(a);
+        departmentATM.addATM(b);
+        departmentATM.addATM(c);
+        departmentATM.removeATM(b);
+        List<ATM> expected =departmentATM.getCurrentAtms();
 
-
+        assertEquals( expected, actual );
     }
 
     @Test
@@ -44,8 +40,9 @@ class MyDepartTest {
 
         MyDepart departExpected = new MyDepart();
         departExpected.addATM( atm );
+        List<ATM> expected = departExpected.getCurrentAtms();
 
-        assertEquals( departExpected,actual );
+        assertEquals( expected,actual );
     }
 
     @Test
@@ -57,20 +54,19 @@ class MyDepartTest {
         actual.add( b );
         actual.remove( b );
 
-
-
         MyDepart departExpected = new MyDepart();
         departExpected.addATM( a );
         departExpected.addATM( b );
         departExpected.removeATM( b );
+        List<ATM> expected = departExpected.getCurrentAtms();
 
-        assertEquals( departExpected,actual );
+        assertEquals( expected,actual );
     }
 
     @Test
     void getRestMoneyATMs() {
         ATM atm = mock(ATM.class);
-        when( atm.GetRestMoneyATM()).thenReturn( 200 );
+        when( atm.getRestMoneyATM()).thenReturn( 200 );
         MyDepart depart = new MyDepart();
         depart.addATM( atm );
 
@@ -83,13 +79,12 @@ class MyDepartTest {
     @Test
     void setOriginalyStatementATM() {
         ATM atm = mock(ATM.class);
-        when( atm.GetRestMoneyATM()).thenReturn( 1000 );
-        doNothing().when(atm).StartATM( );
+        doNothing().when(atm).update( "SetOriginalConditionATM" );
 
         MyDepart depart = new MyDepart();
         depart.addATM(atm);
         depart.setOriginalyStatementATM();
 
-        verify(atm,times( 1 )).StartATM();
+        verify(atm,times( 1 )).update( "SetOriginalConditionATM" );
     }
 }
