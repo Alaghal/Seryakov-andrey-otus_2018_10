@@ -1,34 +1,55 @@
 package ru.otus.l8.Depart;
 
 import ru.otus.l7.ATM.interfaces.ATM;
+import ru.otus.l7.ATM.interfaces.EventListener;
 import ru.otus.l8.Depart.interfaces.DepartATM;
+import ru.otus.l8.Depart.interfaces.EventManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyDepart implements DepartATM {
+    private List<ATM> atmsList;
+    public EventManager events;
+
+    public MyDepart(){
+        atmsList = new ArrayList<>( );
+        this.events = new MyEventManager( "PrepareForGetAmountMoneyATM", "SetOriginalConditionATM" );
+    }
+
     @Override
     public List<ATM> getCurrentAtms() {
-        throw new UnsupportedOperationException();
+        return atmsList;
     }
 
     @Override
     public void addATM(ATM atm) {
-         throw new UnsupportedOperationException();
-
+         atmsList.add( atm );
+         events.subscribe("PrepareForGetAmountMoneyATM",  atm );
+         events.subscribe("SetOriginalConditionATM",  atm );
     }
 
     @Override
     public void removeATM(ATM atm) {
-        throw new UnsupportedOperationException();
+        atmsList.remove( atm );
+        events.unsubscribe("PrepareForGetAmountMoneyATM",  atm );
+        events.unsubscribe("SetOriginalConditionATM",  atm );
     }
 
     @Override
     public int getRestMoneyATMs() {
-        throw new UnsupportedOperationException();
+        events.notify( "PrepareForGetAmountMoneyATM" );
+
+        int collectorAmountMoneyATM=0;
+        for (var atm : atmsList) {
+            collectorAmountMoneyATM+=atm.getRestMoneyATM();
+        }
+
+        return collectorAmountMoneyATM;
     }
 
     @Override
     public void setOriginalyStatementATM() {
-        throw new UnsupportedOperationException();
+        events.notify( "SetOriginalConditionATM" );
     }
 }
