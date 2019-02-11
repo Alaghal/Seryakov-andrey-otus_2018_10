@@ -17,6 +17,6 @@ public class GetCashCommand implements Command {
     public void execute() {
         System.out.println("Please enter the required withdrawal amount");
         int amount = in.nextInt();
-        atm.GetMoney(amount);
+        atm.getMoney(amount);
     }
 }

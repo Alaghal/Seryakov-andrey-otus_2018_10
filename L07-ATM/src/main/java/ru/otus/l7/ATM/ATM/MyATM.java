@@ -3,7 +3,7 @@ package ru.otus.l7.ATM.ATM;
 import ru.otus.l7.ATM.enums.StatusATM;
 import ru.otus.l7.ATM.cassettes.*;
 import ru.otus.l7.ATM.interfaces.ATM;
-import ru.otus.l7.ATM.interfaces.EventListener;
+import ru.otus.l7.ATM.interfaces.Command;
 
 import java.util.*;
 
@@ -14,11 +14,15 @@ public class MyATM implements ATM {
 
     public MyATM() {
         listCassette = new ArrayList<>();
-        InitCassette();
+        initCassette();
         conditionATM = StatusATM.Working;
     }
 
-    private void InitCassette() {
+    public void setRestMoneyATM( int restMoneyATM){
+        this.restMoneyATM = restMoneyATM;
+    }
+
+    private void initCassette() {
         listCassette.add(new TwoThousandCassette(50));
         listCassette.add(new ThousandsCassette(50));
         listCassette.add(new FiveHundredsCassette(50));
@@ -49,20 +53,23 @@ public class MyATM implements ATM {
         return listCassette;
     }
 
-
-    @Override
-    public void StartATM() {
-        conditionATM = StatusATM.Working;
-        InitCassette();
+    public List<Cassette> getListCassette(){
+        return  listCassette;
     }
 
     @Override
-    public void StopATM() {
+    public void startATM() {
+        conditionATM = StatusATM.Working;
+        initCassette();
+    }
+
+    @Override
+    public void stopATM() {
         conditionATM = StatusATM.Stoped;
     }
 
     @Override
-    public void GetMoney(int amount) {
+    public void getMoney(int amount) {
         Cassette lastCassette = listCassette.get(listCassette.size() - 1);
 
         if (conditionATM == StatusATM.Working) {
@@ -73,7 +80,7 @@ public class MyATM implements ATM {
                     listCassette.stream().findFirst().get().getMoney(amount);
                 } else {
                     System.out.println("sorry no money in ATM");
-                    StopATM();
+                    stopATM();
                  }
             }
         }
@@ -107,16 +114,8 @@ public class MyATM implements ATM {
     }
 
     @Override
-    public void update(String eventType) {
-        if(eventType =="PrepareForGetAmountMoneyATM"){
-            for (var cassette: listCassette) {
-                restMoneyATM+= cassette.getNomenal() * cassette.getCountBanknotesCassette();
-            }
-        } else
-        if(eventType =="SetOriginalConditionATM"){
-            StartATM();
-        }
-
+    public void update(Command  comd) {
+         comd.execute();
     }
 
     class CassetteComparator implements Comparator<Cassette> {
