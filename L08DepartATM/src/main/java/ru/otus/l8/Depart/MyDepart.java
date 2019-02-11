@@ -1,12 +1,12 @@
 package ru.otus.l8.Depart;
 
 import ru.otus.l7.ATM.interfaces.ATM;
-import ru.otus.l7.ATM.interfaces.EventListener;
 import ru.otus.l8.Depart.interfaces.DepartATM;
 import ru.otus.l8.Depart.interfaces.EventManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MyDepart implements DepartATM {
     private List<ATM> atmsList;
@@ -38,8 +38,8 @@ public class MyDepart implements DepartATM {
 
     @Override
     public int getRestMoneyATMs() {
-        events.notify( "PrepareForGetAmountMoneyATM" );
 
+        events.notify( "PrepareForGetAmountMoneyATM", new PrepareATMSForGetAmount( ) );
         int collectorAmountMoneyATM=0;
         for (var atm : atmsList) {
             collectorAmountMoneyATM+=atm.getRestMoneyATM();
@@ -50,6 +50,6 @@ public class MyDepart implements DepartATM {
 
     @Override
     public void setOriginalyStatementATM() {
-        events.notify( "SetOriginalConditionATM" );
+        events.notify( "SetOriginalConditionATM", new SetOriginalStatementAtms( ));
     }
 }
