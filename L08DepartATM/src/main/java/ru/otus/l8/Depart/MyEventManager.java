@@ -1,6 +1,5 @@
 package ru.otus.l8.Depart;
 
-import ru.otus.l7.ATM.interfaces.Command;
 import ru.otus.l7.ATM.interfaces.EventListener;
 import ru.otus.l8.Depart.interfaces.CommandDepartment;
 import ru.otus.l8.Depart.interfaces.EventManager;
@@ -35,7 +34,7 @@ public class MyEventManager implements EventManager {
     public void notify(String eventType, CommandDepartment command) {
         List<EventListener> users = listeners.get(eventType);
         for (EventListener listener : users) {
-            command.setLisnerForCommand( listener );
+            command.setListnerForCommand( listener );
             listener.update(command);
         }
     }

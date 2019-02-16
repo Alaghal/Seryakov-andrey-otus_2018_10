@@ -1,6 +1,7 @@
 package ru.otus.l8.Depart;
 
 import ru.otus.l7.ATM.interfaces.ATM;
+import ru.otus.l7.ATM.interfaces.EventListener;
 import ru.otus.l8.Depart.interfaces.CommandDepartment;
 
 public class PrepareATMSForGetAmount implements CommandDepartment {
@@ -15,8 +16,9 @@ public class PrepareATMSForGetAmount implements CommandDepartment {
             atm.setRestMoneyATM( restMoneyATM );
     }
 
+
     @Override
-    public void setLisnerForCommand(Object listner) {
+    public void setListnerForCommand(EventListener listner) {
         this.atm=(ATM)listner;
     }
 }
