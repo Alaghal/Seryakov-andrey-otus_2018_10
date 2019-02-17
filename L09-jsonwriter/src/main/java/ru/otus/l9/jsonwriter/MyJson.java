@@ -157,7 +157,7 @@ public class MyJson {
                     setFieldValue( inputeObject, keyName, parser.getString() );
                     break;
                 case VALUE_NUMBER:
-                    setFieldValue( inputeObject, keyName, parser.getLong() );
+                    setFieldValue( inputeObject, keyName, parser.getInt() );
                     break;
             }
         }
