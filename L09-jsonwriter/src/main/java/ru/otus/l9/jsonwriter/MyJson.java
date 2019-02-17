@@ -5,39 +5,59 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import ru.otus.l4.framework.mytestframework.reflaction.ReflectionHelper;
 
-import javax.json.*;
+import javax.json.Json;
+import javax.json.JsonReader;
+import javax.json.JsonStructure;
 import javax.json.stream.JsonParser;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.StringReader;
-import java.lang.reflect.Type;
 import java.util.List;
 
 import static ru.otus.l4.framework.mytestframework.reflaction.ReflectionHelper.getFieldValue;
+import static ru.otus.l4.framework.mytestframework.reflaction.ReflectionHelper.setFieldValue;
 
 public class MyJson {
 
 
     public <T> T fromJson(String json, Class<T> classInputeObject) {
-        T objectForTest = null;
+        T objectForConvert = null;
         JSONObject jsonObject = (JSONObject) JSONValue.parse( json );
-        if (jsonObject.keySet().contains( classInputeObject.getName() )) {
+        if (jsonObject.keySet().contains( classInputeObject.getSimpleName() )) {
             try {
-                var parametrsConstructors = classInputeObject.getDeclaredConstructor().getParameters();
-                int countArgs =  classInputeObject.getDeclaredConstructor().getParameters().length;
+                var constructors = classInputeObject.getConstructors();
+                int countArgs = constructors[0].getParameterCount();
                 Object[] args = new Object[countArgs];
-                for (int i =0; i< countArgs; i++) {
-                    var value= jsonObject.get( parametrsConstructors[i].getName());
-                    args[i]= value;
+                for (int i = 0; i < countArgs; i++) {
+                    var nameConstructor = constructors[0].getParameters()[i];
+                    var value = constructors[0].getParameters()[i];
+                    args[i] = fillPrimitiveArg(value.getType());
                 }
-                objectForTest = ReflectionHelper.instantiate( classInputeObject,args );
+               // objectForConvert = classInputeObject.getConstructor().newInstance( args );
+                objectForConvert = ReflectionHelper.instantiate( classInputeObject, args );
+                objectForConvert = (T) setValueToObjectOfJson( json, objectForConvert );
 
-            } catch ( NoSuchMethodException  e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return objectForTest;
+        return objectForConvert;
     }
+
+    private Object fillPrimitiveArg(Class argType) {
+        Object object = new Object();
+        String initialValue = "0";
+
+        if (argType.getTypeName()== "java.lang.Integer") {
+            object = Integer.valueOf( initialValue );
+        } else if (argType.getTypeName() == "java.lang.String") {
+            object = initialValue;
+        } else if (argType.getTypeName() == "java.lang.Double") {
+            object = Double.valueOf( initialValue );
+        }
+        return object;
+    }
+
 
     public JSONObject forJsonObject(List inputList) {
         JSONArray array = new JSONArray();
@@ -66,8 +86,8 @@ public class MyJson {
     public JSONObject forJsonObject(Object inputObject) {
         JSONObject objectCollector = new JSONObject();
         String inputObjectName = inputObject.getClass().getSimpleName();
-        var t =inputObject.getClass().getFields();
-        if (inputObject.getClass().getFields().length > 0) {
+        var t = inputObject.getClass().getDeclaredFields();
+        if (inputObject.getClass().getDeclaredFields().length > 0) {
             objectCollector = reverseCurentClass( inputObject, objectCollector, inputObjectName );
         } else objectCollector.put( objectCollector.getClass().getSimpleName(), inputObject );
         return objectCollector;
@@ -75,15 +95,18 @@ public class MyJson {
     }
 
     private JSONObject reverseCurentClass(Object inputObject, JSONObject jObject, String nameObject) {
-        if (inputObject.getClass().getFields().length > 0 && checkPrimitiveWarper(inputObject)) {
+        if (inputObject.getClass().getDeclaredFields().length > 0) {
             JSONArray jArray = new JSONArray();
-            for (int i = 0; i < inputObject.getClass().getFields().length; i++) {
+            for (int i = 0; i < inputObject.getClass().getDeclaredFields().length; i++) {
                 JSONObject jObjectField = new JSONObject();
-                String nameField = inputObject.getClass().getFields()[i].getName();
-                var field = inputObject.getClass().getFields()[i];
-               var name = field.getName();
-               jObjectField = reverseCurentClass( field, jObjectField, nameField );
-               jArray.add( jObjectField );
+                String nameField = inputObject.getClass().getDeclaredFields()[i].getName();
+                var field = inputObject.getClass().getDeclaredFields()[i];
+                if (field.getType().isPrimitive() || (field.getType() == String.class)) {
+                    jObjectField.put( nameField, getFieldValue( inputObject, nameField ) );
+                    jArray.add( jObjectField );
+
+                } else jObjectField = reverseCurentClass( field, jObjectField, nameField );
+
             }
             jObject.put( nameObject, jArray );
 
@@ -96,11 +119,11 @@ public class MyJson {
         return jObject;
     }
 
-    private boolean checkPrimitiveWarper(Object inputObject){
-        boolean flag = false;
+    private boolean checkPrimitiveWarper(Object inputObject) {
+        boolean flag = true;
 
-        if(  inputObject.getClass().getComponentType().isPrimitive()){
-            flag =true;
+        if (Integer.TYPE.isInstance( inputObject ) && String.class.isInstance( inputObject )) {
+            flag = false;
         }
         return flag;
     }
@@ -110,31 +133,35 @@ public class MyJson {
         return reader.read();
     }
 
-    private static void parseJsonString( String JSON) {
+    private Object setValueToObjectOfJson(String JSON, Object inputeObject) {
 
-        JsonParser parser = Json.createParser(new StringReader(JSON));
+        JsonParser parser = Json.createParser( new StringReader( JSON ) );
+        String keyName = null;
 
         while (parser.hasNext()) {
             JsonParser.Event event = parser.next();
             switch (event) {
-                case START_ARRAY:
-                case END_ARRAY:
-                case START_OBJECT:
-                case END_OBJECT:
                 case VALUE_FALSE:
+                    setFieldValue( inputeObject, keyName, false );
+                    break;
                 case VALUE_NULL:
+                    setFieldValue( inputeObject, keyName, null );
+                    break;
                 case VALUE_TRUE:
-                    System.out.println(event.toString());
+                    setFieldValue( inputeObject, keyName, true );
                     break;
                 case KEY_NAME:
-                    System.out.print(event.toString() + " " + parser.getString() + " - ");
+                    keyName = parser.getString();
                     break;
                 case VALUE_STRING:
+                    setFieldValue( inputeObject, keyName, parser.getString() );
+                    break;
                 case VALUE_NUMBER:
-                    System.out.println(event.toString() + " " + parser.getString());
+                    setFieldValue( inputeObject, keyName, parser.getLong() );
                     break;
             }
         }
+        return inputeObject;
     }
 
 }

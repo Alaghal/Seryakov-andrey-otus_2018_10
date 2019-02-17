@@ -15,11 +15,11 @@ public class Demo {
     }
 
     static class BagOfPrimitives {
-        public final int value1;
-        public final String value2;
+        private final int value1;
+        private final String value2;
         private final int value3;
 
-        public BagOfPrimitives(int value1, String value2, int value3) {
+        public BagOfPrimitives(Integer value1, String value2, Integer value3) {
             this.value1 = value1;
             this.value2 = value2;
             this.value3 = value3;

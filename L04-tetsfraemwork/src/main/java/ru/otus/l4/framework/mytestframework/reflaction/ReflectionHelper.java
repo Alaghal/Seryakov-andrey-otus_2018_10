@@ -19,7 +19,9 @@ public class ReflectionHelper {
                 return type.getDeclaredConstructor().newInstance();
             } else {
                 Class<?>[] classes = toClasses(args);
-                return type.getDeclaredConstructor(classes).newInstance(args);
+                var constructor =type.getDeclaredConstructor(classes);
+                constructor.setAccessible( true );
+                return constructor.newInstance(args);
             }
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
