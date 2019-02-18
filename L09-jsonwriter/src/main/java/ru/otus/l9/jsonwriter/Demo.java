@@ -1,12 +1,18 @@
 package ru.otus.l9.jsonwriter;
 
+import java.util.List;
+
 public class Demo {
 
     public static void main(String... arg) {
         BagOfPrimitives obj = new BagOfPrimitives( 22, "test", 10 );
         System.out.println( obj );
         MyJson myson = new MyJson();
-        String json = myson.forJsonObject( obj ).toJSONString();
+
+
+        //String json = myson.toJsonObject(  List.of(1.2, 2, 3) ).toJSONString();
+        String json = myson.toJsonObject(obj).toJSONString();
+
         System.out.println( json );
 
         BagOfPrimitives obj2 = myson.fromJson( json, BagOfPrimitives.class );
@@ -19,7 +25,7 @@ public class Demo {
         private final String value2;
         private final int value3;
 
-        public BagOfPrimitives(Integer value1, String value2, Integer value3) {
+        public BagOfPrimitives(int value1, String value2, int value3) {
             this.value1 = value1;
             this.value2 = value2;
             this.value3 = value3;

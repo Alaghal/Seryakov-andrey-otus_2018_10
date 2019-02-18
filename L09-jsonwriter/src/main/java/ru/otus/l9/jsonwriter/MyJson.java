@@ -12,6 +12,9 @@ import javax.json.stream.JsonParser;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.StringReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static ru.otus.l4.framework.mytestframework.reflaction.ReflectionHelper.getFieldValue;
@@ -48,48 +51,67 @@ public class MyJson {
         Object object = new Object();
         String initialValue = "0";
 
-        if (argType.getTypeName()== "java.lang.Integer") {
-            object = Integer.valueOf( initialValue );
-        } else if (argType.getTypeName() == "java.lang.String") {
+        if (argType == int.class) {
+            object = 0;
+        } else if (argType == String.class) {
             object = initialValue;
-        } else if (argType.getTypeName() == "java.lang.Double") {
+        } else if (argType == double.class) {
             object = Double.valueOf( initialValue );
         }
         return object;
     }
 
 
-    public JSONObject forJsonObject(List inputList) {
+    public JSONObject toJsonObjectList(List inputList) {
         JSONArray array = new JSONArray();
         JSONObject jObject = new JSONObject();
         for (var value : inputList) {
-            JSONObject jsonVslue = new JSONObject();
-            jsonVslue = forJsonObject( value );
+            JSONObject jsonVslue = toJsonObject( value );
             array.add( jsonVslue );
         }
         jObject.put( "List", array );
         return jObject;
     }
 
-    public JSONObject forJsonObject(Object[] inputArray) {
+    private JSONObject toJsonObjectArray(Object[] inputArray) {
         JSONArray array = new JSONArray();
         JSONObject jObject = new JSONObject();
         for (var value : inputArray) {
-            JSONObject jsonVslue = new JSONObject();
-            jsonVslue = forJsonObject( value );
+            JSONObject jsonVslue = toJsonObject( value );
             array.add( jsonVslue );
         }
         jObject.put( "Array", array );
         return jObject;
     }
 
-    public JSONObject forJsonObject(Object inputObject) {
+    public JSONObject toJsonObject(Object inputObject) {
         JSONObject objectCollector = new JSONObject();
-        String inputObjectName = inputObject.getClass().getSimpleName();
-        var t = inputObject.getClass().getDeclaredFields();
-        if (inputObject.getClass().getDeclaredFields().length > 0) {
-            objectCollector = reverseCurentClass( inputObject, objectCollector, inputObjectName );
-        } else objectCollector.put( objectCollector.getClass().getSimpleName(), inputObject );
+        if(inputObject != null) {
+            var simpleName = inputObject.getClass().getSimpleName();
+            if(inputObject.getClass().isArray()){
+                var lenghtArray = Array.getLength( inputObject );
+                Object[] array = new Object[lenghtArray];
+                for(int i=0; i< lenghtArray; i++){
+                   array[i] = Array.get( inputObject,i );
+                }
+                objectCollector =  toJsonObjectArray(array);
+            } else if(simpleName.equals("ListN") ) {
+                objectCollector = toJsonObjectList((List<Object>)inputObject);
+
+            } else {
+                String inputObjectName = inputObject.getClass().getSimpleName();
+                var inputObjectClass = inputObject.getClass();
+                if (inputObjectClass.getDeclaredFields().length > 0
+                        && inputObjectClass != Integer.class
+                        && inputObjectClass != String.class
+                        && inputObjectClass != Double.class
+                        && inputObjectClass != Boolean.class
+                        && inputObjectClass != Byte.class
+                ) {
+                    objectCollector = reverseCurentClass( inputObject, objectCollector, inputObjectName );
+                } else objectCollector.put( inputObjectClass.getSimpleName(), inputObject );
+            }
+        }
         return objectCollector;
 
     }
@@ -119,19 +141,6 @@ public class MyJson {
         return jObject;
     }
 
-    private boolean checkPrimitiveWarper(Object inputObject) {
-        boolean flag = true;
-
-        if (Integer.TYPE.isInstance( inputObject ) && String.class.isInstance( inputObject )) {
-            flag = false;
-        }
-        return flag;
-    }
-
-    private static JsonStructure read() throws FileNotFoundException {
-        JsonReader reader = Json.createReader( new FileReader( "jsondata.txt" ) );
-        return reader.read();
-    }
 
     private Object setValueToObjectOfJson(String JSON, Object inputeObject) {
 
@@ -163,5 +172,11 @@ public class MyJson {
         }
         return inputeObject;
     }
-
+    public static <T> T convertInstanceOfObject(Object o, Class<T> clazz) {
+        try {
+            return clazz.cast(o);
+        } catch(ClassCastException e) {
+            return null;
+        }
+    }
 }

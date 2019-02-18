@@ -19,7 +19,15 @@ public class ReflectionHelper {
                 return type.getDeclaredConstructor().newInstance();
             } else {
                 Class<?>[] classes = toClasses(args);
-                var constructor =type.getDeclaredConstructor(classes);
+                var constructor = type.getDeclaredConstructor(classes);
+                //var constructors =type.getDeclaredConstructors();
+
+        //        var constructor =  constructors[0];
+            //    var argsType=constructor.getTypeParameters();
+             //   var args=
+              //  for(var arg : argsType){
+
+           //     }
                 constructor.setAccessible( true );
                 return constructor.newInstance(args);
             }
@@ -86,4 +94,6 @@ public class ReflectionHelper {
     public static Class<?>[] toClasses(Object[] args) {
         return Arrays.stream(args).map(Object::getClass).toArray(Class<?>[]::new);
     }
+
+
 }
