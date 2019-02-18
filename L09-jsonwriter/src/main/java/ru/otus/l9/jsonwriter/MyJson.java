@@ -36,7 +36,6 @@ public class MyJson {
                     var value = constructors[0].getParameters()[i];
                     args[i] = fillPrimitiveArg(value.getType());
                 }
-               // objectForConvert = classInputeObject.getConstructor().newInstance( args );
                 objectForConvert = ReflectionHelper.instantiate( classInputeObject, args );
                 objectForConvert = (T) setValueToObjectOfJson( json, objectForConvert );
 
@@ -47,7 +46,7 @@ public class MyJson {
         return objectForConvert;
     }
 
-    private Object fillPrimitiveArg(Class argType) {
+    private <T> T fillPrimitiveArg(Class<T> argType) {
         Object object = new Object();
         String initialValue = "0";
 
@@ -62,7 +61,7 @@ public class MyJson {
         } else if (argType == byte.class && argType == Byte.class){
             object = Byte.valueOf( initialValue );
         }
-        return object;
+        return (T) object;
     }
 
 
