@@ -51,12 +51,16 @@ public class MyJson {
         Object object = new Object();
         String initialValue = "0";
 
-        if (argType == int.class) {
+        if (argType == int.class && argType == Integer.class) {
             object = 0;
         } else if (argType == String.class) {
             object = initialValue;
-        } else if (argType == double.class) {
+        } else if (argType == double.class && argType == Double.class) {
             object = Double.valueOf( initialValue );
+        } else if (argType == boolean.class && argType == Boolean.class){
+            object = true;
+        } else if (argType == byte.class && argType == Byte.class){
+            object = Byte.valueOf( initialValue );
         }
         return object;
     }
