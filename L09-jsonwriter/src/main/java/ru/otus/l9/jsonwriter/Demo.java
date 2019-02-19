@@ -10,7 +10,7 @@ public class Demo {
         MyJson myson = new MyJson();
 
 
-        //String json = myson.toJsonObject(  List.of(1.2, 2, 3) ).toJSONString();
+      // String json = myson.toJsonObject(  List.of(1.2, 2, 3) ).toJSONString();
         String json = myson.toJsonObject(obj).toJSONString();
 
         System.out.println( json );

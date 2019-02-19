@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.StringReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -98,7 +99,7 @@ public class MyJson {
                    array[i] = Array.get( inputObject,i );
                 }
                 objectCollector =  toJsonObjectArray(array);
-            } else if(simpleName.equals("ListN") ) {
+            } else if(Collection.class.isAssignableFrom(inputObject.getClass()) ) {                                    //   simpleName.equals("ListN"
                 objectCollector = toJsonObjectList((List<Object>)inputObject);
 
             } else {
