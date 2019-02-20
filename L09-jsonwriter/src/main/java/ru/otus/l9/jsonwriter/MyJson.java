@@ -9,6 +9,7 @@ import javax.json.Json;
 import javax.json.JsonReader;
 import javax.json.JsonStructure;
 import javax.json.stream.JsonParser;
+import javax.naming.OperationNotSupportedException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.StringReader;
@@ -66,27 +67,37 @@ public class MyJson {
     }
 
 
-    public JSONObject toJsonObjectList(List inputList) {
+    public JSONObject toJsonObjectList(List inputList,String nameKey) {
         JSONArray array = new JSONArray();
         JSONObject jObject = new JSONObject();
         for (var value : inputList) {
             JSONObject jsonVslue = toJsonObject( value );
             array.add( jsonVslue );
         }
-        jObject.put( "List", array );
+        jObject.put( nameKey, array );
         return jObject;
     }
 
-    private JSONObject toJsonObjectArray(Object[] inputArray) {
+    private JSONObject toJsonObjectArray(Object[] inputArray, String nameKey) {
         JSONArray array = new JSONArray();
         JSONObject jObject = new JSONObject();
         for (var value : inputArray) {
             JSONObject jsonVslue = toJsonObject( value );
             array.add( jsonVslue );
         }
-        jObject.put( "Array", array );
+        jObject.put( nameKey, array );
         return jObject;
     }
+     private Object[] convertOnjectToArray (Object inputObject){
+
+             var lenghtArray = Array.getLength( inputObject );
+             Object[] array = new Object[lenghtArray];
+             for (int i = 0; i < lenghtArray; i++) {
+                 array[i] = Array.get( inputObject, i );
+             }
+         return  array;
+     }
+
 
     public JSONObject toJsonObject(Object inputObject) {
         JSONObject objectCollector = new JSONObject();
@@ -98,9 +109,9 @@ public class MyJson {
                 for(int i=0; i< lenghtArray; i++){
                    array[i] = Array.get( inputObject,i );
                 }
-                objectCollector =  toJsonObjectArray(array);
+                objectCollector =  toJsonObjectArray(array,"Array");
             } else if(Collection.class.isAssignableFrom(inputObject.getClass()) ) {                                    //   simpleName.equals("ListN"
-                objectCollector = toJsonObjectList((List<Object>)inputObject);
+                objectCollector = toJsonObjectList((List<Object>)inputObject, "List");
 
             } else {
                 String inputObjectName = inputObject.getClass().getSimpleName();
@@ -131,7 +142,17 @@ public class MyJson {
                     jObjectField.put( nameField, getFieldValue( inputObject, nameField ) );
                     jArray.add( jObjectField );
 
+                } else if(field.getType()== List.class){
+                    Object list= getFieldValue(inputObject,field.getName());
+                    jObjectField= toJsonObjectList((List<Object>)list, field.getName());
+                    jArray.add(jObjectField);
+                  //  }
+                } else if(field.getType().isArray()){
+                    Object array=getFieldValue(inputObject,field.getName());
+                    jObjectField=toJsonObjectArray(convertOnjectToArray(array), field.getName());
+                    jArray.add(jObjectField);
                 } else jObjectField = reverseCurentClass( field, jObjectField, nameField );
+
 
             }
             jObject.put( nameObject, jArray );
@@ -175,12 +196,5 @@ public class MyJson {
             }
         }
         return inputeObject;
-    }
-    public static <T> T convertInstanceOfObject(Object o, Class<T> clazz) {
-        try {
-            return clazz.cast(o);
-        } catch(ClassCastException e) {
-            return null;
-        }
     }
 }

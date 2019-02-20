@@ -15,15 +15,17 @@ public class Demo {
 
         System.out.println( json );
 
-        BagOfPrimitives obj2 = myson.fromJson( json, BagOfPrimitives.class );
-        System.out.println( obj.equals( obj2 ) );
-        System.out.println( obj2 );
+     //   BagOfPrimitives obj2 = myson.fromJson( json, BagOfPrimitives.class );
+     //   System.out.println( obj.equals( obj2 ) );
+     //   System.out.println( obj2 );
     }
 
     static class BagOfPrimitives {
         private final int value1;
         private final String value2;
         private final int value3;
+        private final List<Integer> integerList =  List.of(1, 2, 3);
+        private final int[] integerArr =  new int[] {1, 2, 3};
 
         public BagOfPrimitives(int value1, String value2, int value3) {
             this.value1 = value1;
