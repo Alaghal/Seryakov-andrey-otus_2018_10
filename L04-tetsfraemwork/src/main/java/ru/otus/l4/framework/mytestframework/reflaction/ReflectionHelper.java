@@ -20,15 +20,6 @@ public class ReflectionHelper {
             } else {
                 Class<?>[] classes = toClasses(args);
                 var constructor = type.getDeclaredConstructor(classes);
-
-                //var constructors =type.getDeclaredConstructors();
-
-        //        var constructor =  constructors[0];
-            //    var argsType=constructor.getTypeParameters();
-             //   var args=
-              //  for(var arg : argsType){
-
-           //     }
                 constructor.setAccessible( true );
                 return constructor.newInstance(args);
             }

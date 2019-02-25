@@ -37,7 +37,6 @@ public class MyTestFramework {
         for (Method m : listMethodsAnnotation) {
             ReflectionHelper.callMethod(testObject, m.getName());
         }
-
         return testObject;
     }
 
