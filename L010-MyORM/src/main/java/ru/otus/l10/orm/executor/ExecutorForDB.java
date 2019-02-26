@@ -1,7 +1,5 @@
 package ru.otus.l10.orm.executor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.otus.l10.orm.annotation.ID;
 import ru.otus.l10.orm.enums.TypePrimitibeFields;
 import ru.otus.l10.orm.reflection.MyParser;
 
@@ -15,10 +13,17 @@ import static ru.otus.l4.framework.mytestframework.reflaction.ReflectionHelper.s
 
 public class ExecutorForDB<T> implements DbExecutor<T> {
     private final Connection connection;
+    private final Map<String, Object> mapFieldObject;
+    private final long idObject;
+    private final  Map<String, TypePrimitibeFields> mapFielClazz;
 
-    public ExecutorForDB(Connection connection) {
+    public ExecutorForDB(Connection connection, Map<String, Object> mapFieldObject, long id, Map<String, TypePrimitibeFields> mapFielClazz) {
         this.connection = connection;
+        this.mapFieldObject = mapFieldObject;
+        this.idObject = id;
+        this.mapFielClazz = mapFielClazz;
     }
+
 
     @Override
     public long insertRecord(String sql, Map<String, Object> map) throws SQLException {
@@ -130,18 +135,13 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
 
     @Override
     public void save(T objectData) throws SQLException {
-        MyParser parser = new MyParser();
-        ObjectMapper oMapper = new ObjectMapper();
-        long id = parser.getValueOfAnnotationName( ID.class, objectData );
-
-        Map<String, Object> mapField = oMapper.convertValue( objectData, Map.class );
-        if (checkObjectPresentInDB( objectData, id )) {
-            String sql = CreateQueryForUpdate( objectData, mapField );
-             updateRecord( sql, id, mapField );
-            System.out.println( "Update record at id=" + id);
+        if (checkObjectPresentInDB( objectData, idObject )) {
+            String sql = CreateQueryForUpdate( objectData, mapFieldObject );
+             updateRecord( sql, idObject, mapFieldObject );
+            System.out.println( "Update record at id=" + idObject);
         } else {
-            String sql = CreateQueryForInsert( objectData, mapField );
-            var returnId = insertRecord( sql, mapField );
+            String sql = CreateQueryForInsert( objectData, mapFieldObject );
+            var returnId = insertRecord( sql, mapFieldObject );
             System.out.println( "Insert record at " + returnId );
         }
     }
@@ -149,7 +149,6 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
     @Override
     public <T1> T1 load(long id, Class<T1> clazz) {
         MyParser parser = new MyParser();
-        Map<String, TypePrimitibeFields> mapFielClazz = parser.getTypeFieldOfObject( clazz );
         String sql = "select * from " + clazz.getSimpleName() + " where id  = ?";
         try (PreparedStatement pst = this.connection.prepareStatement( sql )) {
             pst.setLong( 1, id );
