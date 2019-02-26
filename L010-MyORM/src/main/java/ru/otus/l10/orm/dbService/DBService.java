@@ -1,8 +1,6 @@
 package ru.otus.l10.orm.dbService;
 
-import ru.otus.l10.orm.annotation.ID;
 import ru.otus.l10.orm.executor.ExecutorForDB;
-import ru.otus.l10.orm.reflection.MyParser;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -32,5 +30,11 @@ public class DBService {
             pst.executeUpdate();
         }
         System.out.println("table created");
+    }
+
+    public static interface DbService {
+        public void SaveToDB(Object inputObject, DataSource dataSource);
+        public <T> T GetOfDBObject(Class<T> clazz, long id, DataSource dataSource);
+
     }
 }

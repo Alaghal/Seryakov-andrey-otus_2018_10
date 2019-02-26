@@ -1,4 +1,4 @@
-package ru.otus.l10.orm.interfaces;
+package ru.otus.l10.orm.executor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

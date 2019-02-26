@@ -1,4 +1,4 @@
-package ru.otus.l10.orm.interfaces;
+package ru.otus.l10.orm.reflection;
 
 import java.util.Map;
 

@@ -1,7 +1,6 @@
 package ru.otus.l10.orm.reflection;
 
 import ru.otus.l10.orm.enums.TypePrimitibeFields;
-import ru.otus.l10.orm.interfaces.ParserObjects;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
@@ -11,7 +10,6 @@ import java.util.*;
 import java.util.logging.Logger;
 
 import static ru.otus.l4.framework.mytestframework.reflaction.ReflectionHelper.getFieldValue;
-import static ru.otus.l4.framework.mytestframework.reflaction.ReflectionHelper.setFieldValue;
 
 public class MyParser implements ParserObjects {
 

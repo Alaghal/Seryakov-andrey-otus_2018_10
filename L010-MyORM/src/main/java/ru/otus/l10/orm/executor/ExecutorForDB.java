@@ -3,7 +3,6 @@ package ru.otus.l10.orm.executor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.otus.l10.orm.annotation.ID;
 import ru.otus.l10.orm.enums.TypePrimitibeFields;
-import ru.otus.l10.orm.interfaces.DbExecutor;
 import ru.otus.l10.orm.reflection.MyParser;
 
 import java.lang.reflect.InvocationTargetException;
