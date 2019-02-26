@@ -24,6 +24,45 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
         this.mapFielClazz = mapFielClazz;
     }
 
+    @Override
+    public void save(T objectData) throws SQLException {
+        if (checkObjectPresentInDB( objectData, idObject )) {
+            String sql = CreateQueryForUpdate( objectData, mapFieldObject );
+            updateRecord( sql, idObject, mapFieldObject );
+            System.out.println( "Update record at id=" + idObject);
+        } else {
+            String sql = CreateQueryForInsert( objectData, mapFieldObject );
+            var returnId = insertRecord( sql, mapFieldObject );
+            System.out.println( "Insert record at " + returnId );
+        }
+    }
+
+    @Override
+    public <T1> T1 load(long id, Class<T1> clazz) {
+        MyParser parser = new MyParser();
+        String sql = "select * from " + clazz.getSimpleName() + " where id  = ?";
+        try (PreparedStatement pst = this.connection.prepareStatement( sql )) {
+            pst.setLong( 1, id );
+            try (ResultSet rs = pst.executeQuery()) {
+
+                if (rs.next()) {
+                    T1 object = parser.CreateObjectOfCurrentType( clazz );
+                    setValueToObjectField(rs, mapFielClazz, object);
+                    return object;
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     @Override
     public long insertRecord(String sql, Map<String, Object> map) throws SQLException {
@@ -55,16 +94,7 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
             throw ex;
         }
     }
-    private void setParametersObject(Map<String, Object> map, PreparedStatement pst ) throws SQLException {
-        int counterIndexParams = 1;
-        for (var item : map.entrySet()) {
-            if(item.getKey()=="id"){
-                continue;
-            }
-            pst.setString( counterIndexParams, item.getValue().toString() );
-            counterIndexParams++;
-        }
-    }
+
 
     @Override
     public Optional<T> selectRecord(String sql, long id, Function<ResultSet, T> rsHandler) throws SQLException {
@@ -75,7 +105,16 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
             }
         }
     }
-
+    private void setParametersObject(Map<String, Object> map, PreparedStatement pst ) throws SQLException {
+        int counterIndexParams = 1;
+        for (var item : map.entrySet()) {
+            if(item.getKey()=="id"){
+                continue;
+            }
+            pst.setString( counterIndexParams, item.getValue().toString() );
+            counterIndexParams++;
+        }
+    }
     private boolean checkObjectPresentInDB(T objectData, long idObject) {
         String sql = "select * from " + (Object) objectData.getClass().getSimpleName() + " where id  = ?";
         try (PreparedStatement pst = this.connection.prepareStatement( sql )) {
@@ -133,44 +172,7 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
         return sql.toString();
     }
 
-    @Override
-    public void save(T objectData) throws SQLException {
-        if (checkObjectPresentInDB( objectData, idObject )) {
-            String sql = CreateQueryForUpdate( objectData, mapFieldObject );
-             updateRecord( sql, idObject, mapFieldObject );
-            System.out.println( "Update record at id=" + idObject);
-        } else {
-            String sql = CreateQueryForInsert( objectData, mapFieldObject );
-            var returnId = insertRecord( sql, mapFieldObject );
-            System.out.println( "Insert record at " + returnId );
-        }
-    }
 
-    @Override
-    public <T1> T1 load(long id, Class<T1> clazz) {
-        MyParser parser = new MyParser();
-        String sql = "select * from " + clazz.getSimpleName() + " where id  = ?";
-        try (PreparedStatement pst = this.connection.prepareStatement( sql )) {
-            pst.setLong( 1, id );
-            try (ResultSet rs = pst.executeQuery()) {
-
-                if (rs.next()) {
-                    T1 object = parser.CreateObjectOfCurrentType( clazz );
-                    setValueToObjectField(rs, mapFielClazz, object);
-                    return object;
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     private void setValueToObjectField(ResultSet rs, Map<String, TypePrimitibeFields> mapTypeField, Object inputeObject) throws SQLException {
         for (var item : mapTypeField.entrySet()) {
