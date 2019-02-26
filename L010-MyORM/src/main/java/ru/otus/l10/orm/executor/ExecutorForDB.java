@@ -68,7 +68,7 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
     public long insertRecord(String sql, Map<String, Object> map) throws SQLException {
         Savepoint savePoint = this.connection.setSavepoint( "savePointName" );
         try (PreparedStatement pst = connection.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS )) {
-            setParametersObject(map,pst);
+            setParametersStatement(map,pst);
             pst.executeUpdate();
             try (ResultSet rs = pst.getGeneratedKeys()) {
                 rs.next();
@@ -85,7 +85,7 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
     public void updateRecord(String sql, long id, Map<String, Object> map) throws SQLException {
         Savepoint savePoint = this.connection.setSavepoint( "savePointName" );
         try (PreparedStatement pst = connection.prepareStatement( sql )) {
-            setParametersObject(map,pst);
+            setParametersStatement(map,pst);
             pst.setString( map.values().size(), String.valueOf( id ) );
             pst.executeUpdate();
         } catch (SQLException ex) {
@@ -105,7 +105,7 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
             }
         }
     }
-    private void setParametersObject(Map<String, Object> map, PreparedStatement pst ) throws SQLException {
+    private void setParametersStatement(Map<String, Object> map, PreparedStatement pst ) throws SQLException {
         int counterIndexParams = 1;
         for (var item : map.entrySet()) {
             if(item.getKey()=="id"){
