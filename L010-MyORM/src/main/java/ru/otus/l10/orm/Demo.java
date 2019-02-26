@@ -1,6 +1,7 @@
 package ru.otus.l10.orm;
 
-import ru.otus.l10.orm.dbService.DBService;
+import ru.otus.l10.orm.dbService.DbService;
+import ru.otus.l10.orm.dbService.MyDBService;
 import ru.otus.l10.orm.dbService.H2DataSource;
 import ru.otus.l10.orm.users.SimpleUser;
 
@@ -10,7 +11,7 @@ public class Demo {
 
     public  static  void main(String... arg) throws SQLException {
         H2DataSource dataSource= new H2DataSource();
-        DBService serviceDB = new DBService();
+        DbService serviceDB = new MyDBService();
         SimpleUser userInsert = new SimpleUser( 1,"Forest","Gump" );
         SimpleUser userUpdate = new SimpleUser( 1,"Test","Gump" );
         serviceDB.createTable( dataSource );

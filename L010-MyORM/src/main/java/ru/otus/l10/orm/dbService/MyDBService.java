@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DBService {
+public  class MyDBService implements DbService{
 
     public void SaveToDB(Object inputObject,DataSource dataSource )throws SQLException{
         try(Connection connection = dataSource.getConnection()){
@@ -24,7 +24,8 @@ public class DBService {
         }
     }
 
-    public void createTable(DataSource dataSource)throws SQLException  {
+    @Override
+    public void createTable(H2DataSource dataSource)throws SQLException {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement pst = connection.prepareStatement("create table SIMPLEUSER(id long auto_increment, name varchar(50),secondName varchar(50))")) {
             pst.executeUpdate();
@@ -32,9 +33,5 @@ public class DBService {
         System.out.println("table created");
     }
 
-    public static interface DbService {
-        public void SaveToDB(Object inputObject, DataSource dataSource);
-        public <T> T GetOfDBObject(Class<T> clazz, long id, DataSource dataSource);
 
-    }
 }
