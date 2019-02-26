@@ -23,15 +23,8 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
     @Override
     public long insertRecord(String sql, Map<String, Object> map) throws SQLException {
         Savepoint savePoint = this.connection.setSavepoint( "savePointName" );
-        int counterIndexParams = 1;
         try (PreparedStatement pst = connection.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS )) {
-            for (var item : map.entrySet()) {
-                if(item.getKey() == "id"){
-                    continue;
-                }
-                pst.setString( counterIndexParams, item.getValue().toString() );
-                counterIndexParams++;
-            }
+            setParametersObject(map,pst);
             pst.executeUpdate();
             try (ResultSet rs = pst.getGeneratedKeys()) {
                 rs.next();
@@ -47,22 +40,24 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
     @Override
     public void updateRecord(String sql, long id, Map<String, Object> map) throws SQLException {
         Savepoint savePoint = this.connection.setSavepoint( "savePointName" );
-        int counterIndexParams = 1;
         try (PreparedStatement pst = connection.prepareStatement( sql )) {
-
-            for (var item : map.entrySet()) {
-                if(item.getKey()=="id"){
-                   continue;
-                }
-                pst.setString( counterIndexParams, item.getValue().toString() );
-                counterIndexParams++;
-            }
+            setParametersObject(map,pst);
             pst.setString( map.values().size(), String.valueOf( id ) );
             pst.executeUpdate();
         } catch (SQLException ex) {
             this.connection.rollback( savePoint );
             System.out.println( ex.getMessage() );
             throw ex;
+        }
+    }
+    private void setParametersObject(Map<String, Object> map, PreparedStatement pst ) throws SQLException {
+        int counterIndexParams = 1;
+        for (var item : map.entrySet()) {
+            if(item.getKey()=="id"){
+                continue;
+            }
+            pst.setString( counterIndexParams, item.getValue().toString() );
+            counterIndexParams++;
         }
     }
 
@@ -91,7 +86,6 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
             e.printStackTrace();
         }
         return false;
-
     }
 
     private String CreateQueryForUpdate(T objectData, Map<String, Object> mapField) {
@@ -163,7 +157,8 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
 
                 if (rs.next()) {
                     T1 object = parser.CreateObjectOfCurrentType( clazz );
-                    return (T1) setValueToObjectOfJson( rs, mapFielClazz, object );
+                    setValueToObjectField(rs, mapFielClazz, object);
+                    return object;
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -175,13 +170,10 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
         return null;
     }
 
-    private Object setValueToObjectOfJson(ResultSet rs, Map<String, TypePrimitibeFields> mapTypeField, Object inputeObject) throws SQLException {
-
+    private void setValueToObjectField(ResultSet rs, Map<String, TypePrimitibeFields> mapTypeField, Object inputeObject) throws SQLException {
         for (var item : mapTypeField.entrySet()) {
             switch (item.getValue()) {
                 case VALUE_NUMBER:
@@ -200,10 +192,7 @@ public class ExecutorForDB<T> implements DbExecutor<T> {
                     var booleanFalse = rs.getString( item.getKey() );
                     setFieldValue( inputeObject, item.getKey(), booleanFalse );
                     break;
-
             }
         }
-
-        return inputeObject;
     }
 }
