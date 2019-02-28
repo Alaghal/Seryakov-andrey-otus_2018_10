@@ -17,9 +17,11 @@ public class SimpleUser {
     public long getId() {
         return id;
     }
+
     public String getName() {
         return name;
     }
+
     public String getSecondName() {
         return secondName;
     }
@@ -28,7 +30,7 @@ public class SimpleUser {
     public String toString() {
         return "SimpleUser{" +
                 "id=" + id +
-                ", Name='" + name + '\'' +", SecondName='" + secondName+"\'"+
+                ", Name='" + name + '\'' + ", SecondName='" + secondName + "\'" +
                 '}';
     }
 }

@@ -74,7 +74,7 @@ public class MyParser implements ParserObjects {
             return false;
     }
 
-    private boolean IsWrapperPrimitive(Class<?> clazz) {
+    private boolean isWrapperPrimitive(Class<?> clazz) {
         if (clazz == Integer.class
                 && clazz == String.class
                 && clazz == Double.class
@@ -85,7 +85,7 @@ public class MyParser implements ParserObjects {
             return false;
     }
 
-    private boolean IsNumber(Class clazz) {
+    private boolean isNumber(Class clazz) {
         if (clazz.isPrimitive()) {
             if (clazz == int.class || clazz == float.class || clazz == double.class || clazz == byte.class) {
                 return true;
@@ -96,7 +96,7 @@ public class MyParser implements ParserObjects {
         return false;
     }
 
-    private boolean IsBooleanTrue(Field inputField) {
+    private boolean isBooleanTrue(Field inputField) {
         if (inputField.getType() == Boolean.class || inputField.getType() == boolean.class) {
             Boolean valueField = (boolean) getFieldValue( inputField, inputField.getName() );
             if (valueField) {
@@ -106,7 +106,7 @@ public class MyParser implements ParserObjects {
         return false;
     }
 
-    private boolean IsBooleanFalse(Field inputField) {
+    private boolean isBooleanFalse(Field inputField) {
         if (inputField.getType() == Boolean.class || inputField.getType() == boolean.class) {
             Boolean valueField = (boolean) getFieldValue( inputField, inputField.getName() );
             if (!valueField) {
@@ -121,13 +121,13 @@ public class MyParser implements ParserObjects {
         Map<String, TypePrimitibeFields> mapTypeField = new HashMap<>();
         var fields = clazz.getDeclaredFields();
         for (var field : fields) {
-            if (IsNumber( field.getType() )) {
+            if (isNumber( field.getType() )) {
                 mapTypeField.put( field.getName(), TypePrimitibeFields.VALUE_NUMBER );
             } else if (field.getType() == String.class) {
                 mapTypeField.put( field.getName(), TypePrimitibeFields.VALUE_STRING );
-            } else if (IsBooleanTrue( field )){
+            } else if (isBooleanTrue( field )) {
                 mapTypeField.put( field.getName(), TypePrimitibeFields.VALUE_TRUE );
-            } else if (IsBooleanFalse( field )){
+            } else if (isBooleanFalse( field )) {
                 mapTypeField.put( field.getName(), TypePrimitibeFields.VALUE_FALSE );
             }
         }
@@ -141,7 +141,7 @@ public class MyParser implements ParserObjects {
             var inputObjectClass = inputObject.getClass();
             String inputObjectName = inputObjectClass.getSimpleName();
 
-            if (checkObjectHaveFields( inputObjectClass ) && !IsWrapperPrimitive( inputObjectClass )) {
+            if (checkObjectHaveFields( inputObjectClass ) && !isWrapperPrimitive( inputObjectClass )) {
                 mapObjectField = reverseCurentClass( inputObject, mapObjectField, inputObjectName );
             } else
                 mapObjectField.put( inputObjectName, inputObject );
@@ -150,7 +150,7 @@ public class MyParser implements ParserObjects {
         return mapObjectField;
     }
 
-    public <T> T CreateObjectOfCurrentType(Class<T> clazz) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public <T> T createObjectOfCurrentType(Class<T> clazz) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         var constructors = clazz.getConstructors();
         int countArgs = constructors[0].getParameterCount();
         Object[] args = new Object[countArgs];
@@ -169,8 +169,8 @@ public class MyParser implements ParserObjects {
         String initialValue = "1";
         if (argType == int.class || argType == Integer.class) {
             object = 0;
-        }else if(argType==long.class || argType == Logger.class ){
-            object = Long.valueOf( initialValue);
+        } else if (argType == long.class || argType == Logger.class) {
+            object = Long.valueOf( initialValue );
         } else if (argType == String.class) {
             object = initialValue;
         } else if (argType == double.class || argType == Double.class) {

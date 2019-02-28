@@ -13,8 +13,8 @@ public class H2DataSource implements DataSource {
 
     @Override
     public Connection getConnection() throws SQLException {
-        Connection connection = DriverManager.getConnection(URL);
-        connection.setAutoCommit(false);
+        Connection connection = DriverManager.getConnection( URL );
+        connection.setAutoCommit( false );
         return connection;
     }
 
