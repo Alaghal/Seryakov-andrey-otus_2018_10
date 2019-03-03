@@ -2,11 +2,22 @@ package ru.otus.l10.orm.users;
 
 import ru.otus.l10.orm.annotation.ID;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SimpleUser {
     @ID
-    private final long id;
-    private final String name;
-    private final String secondName;
+    @Id
+    @GeneratedValue
+    private  long id;
+    private  String name;
+    private  String secondName;
+
+
+
+    public  SimpleUser(){}
+
 
     public SimpleUser(long id, String name, String secondName) {
         this.id = id;
@@ -18,13 +29,25 @@ public class SimpleUser {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSecondName() {
         return secondName;
     }
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+
 
     @Override
     public String toString() {

@@ -21,7 +21,7 @@ public class Demo {
         SimpleUser userOfUpdate = (SimpleUser) serviceDB.load( 1, SimpleUser.class );
 
         System.out.println( "Insert user " + userOfInsert.toString() );
-        System.out.println( "Insert user " + userOfUpdate.toString() );
+        System.out.println( "Upfate user " + userOfUpdate.toString() );
 
 
     }
