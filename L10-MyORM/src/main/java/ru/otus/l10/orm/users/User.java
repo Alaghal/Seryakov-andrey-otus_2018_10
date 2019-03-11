@@ -13,6 +13,7 @@ public class User {
 
     private  String name;
     private  String secondName;
+    private  String password;
 
 
     public long getId() {
@@ -49,6 +50,13 @@ public class User {
         this.id = id;
         this.name = name;
         this.secondName = secondName;
+
+    }
+    public User(long id, String name, String secondName, String password){
+        this.id = id;
+        this.name = name;
+        this.secondName = secondName;
+        this.password=password;
     }
     public User(long id, String name, String secondName, AddressDataSet address,List<PhoneDataSet> phones) {
         this.id=id;
@@ -91,4 +99,11 @@ public class User {
         return stringBuilder.toString();
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

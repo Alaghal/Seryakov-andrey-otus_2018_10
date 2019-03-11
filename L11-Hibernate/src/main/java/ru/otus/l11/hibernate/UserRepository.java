@@ -12,10 +12,10 @@ import ru.otus.l10.orm.users.PhoneDataSet;
 import ru.otus.l10.orm.users.SimpleUser;
 import ru.otus.l10.orm.users.User;
 
-public class HibernateFunction {
+public class Repository {
     private final SessionFactory sessionFactory;
 
-    public  HibernateFunction(){
+    public Repository(){
         Configuration configuration = new Configuration()
                 .configure("hibernate.cfg.xml");
 
@@ -42,7 +42,7 @@ public class HibernateFunction {
         return selected;
     }
 
-    public void save(Object object ){
+    public <T> void save(T object ){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.save(object);
