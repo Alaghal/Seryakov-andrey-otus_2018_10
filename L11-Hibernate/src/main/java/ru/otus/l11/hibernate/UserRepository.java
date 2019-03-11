@@ -1,5 +1,6 @@
-package ru.otus.l11.Hibernate;
+package ru.otus.l11.hibernate;
 
+import com.github.fluent.hibernate.cfg.scanner.EntityScanner;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -9,30 +10,32 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import ru.otus.l10.orm.users.AddressDataSet;
 import ru.otus.l10.orm.users.PhoneDataSet;
-import ru.otus.l10.orm.users.SimpleUser;
 import ru.otus.l10.orm.users.User;
 
-public class Repository {
+import java.util.List;
+
+public class UserRepository implements Repository {
     private final SessionFactory sessionFactory;
 
-    public Repository(){
+    public UserRepository(){
         Configuration configuration = new Configuration()
                 .configure("hibernate.cfg.xml");
 
         StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties()).build();
 
-        Metadata metadata = new MetadataSources(serviceRegistry)
-                .addAnnotatedClass( User.class)
-                .addAnnotatedClass( AddressDataSet.class)
-                .addAnnotatedClass( PhoneDataSet.class )
-                .getMetadataBuilder()
-                .build();
+        List<Class<?>> classes = EntityScanner
+                .scanPackages("ru.otus.l10.orm.users").result();
 
-        sessionFactory = metadata.getSessionFactoryBuilder().build();
+        MetadataSources metadata = new MetadataSources(serviceRegistry);
+        for (Class<?> annotatedClass : classes) {
+            metadata.addAnnotatedClass(annotatedClass);
+        }
+
+        sessionFactory = metadata.buildMetadata().buildSessionFactory();
 
     }
-
+    @Override
     public <T>T load(long id, Class<T> clazz){
         T selected;
         try (Session session = sessionFactory.openSession()){
@@ -41,7 +44,7 @@ public class Repository {
         }
         return selected;
     }
-
+    @Override
     public <T> void save(T object ){
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

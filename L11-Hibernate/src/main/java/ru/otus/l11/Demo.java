@@ -2,9 +2,11 @@ package ru.otus.l11;
 
 import ru.otus.l10.orm.users.AddressDataSet;
 import ru.otus.l10.orm.users.PhoneDataSet;
-import ru.otus.l10.orm.users.SimpleUser;
 import ru.otus.l10.orm.users.User;
-import ru.otus.l11.Hibernate.HibernateFunction;
+import ru.otus.l11.hibernate.FactoryRepositories;
+import ru.otus.l11.hibernate.FactoryUserRepository;
+import ru.otus.l11.hibernate.Repository;
+import ru.otus.l11.hibernate.UserRepository;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,7 +15,8 @@ import java.util.List;
 public class Demo {
     public static void main(String... arg) throws SQLException {
 
-        HibernateFunction hFunction = new HibernateFunction();
+        FactoryRepositories  facoryRepos = new FactoryUserRepository();
+        Repository hFunction = facoryRepos.creatRepository();
 
         User userInsert = new User( 1, "Forest", "Gump" );
         User userUpdate = new User( 1, "Test", "Gump" );
