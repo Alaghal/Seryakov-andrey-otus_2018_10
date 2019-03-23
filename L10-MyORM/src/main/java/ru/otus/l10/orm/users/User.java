@@ -10,12 +10,44 @@ public class User {
     @Id
     @GeneratedValue
     private  long id;
-
     private  String name;
     private  String secondName;
     private  String password;
+    private  String login;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private AddressDataSet address;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<PhoneDataSet> phones= new ArrayList<>(  );
 
 
+
+    public User(String login,String password){
+        this.login = login;
+        this.password=password;
+    }
+
+    public User(long id, String name, String secondName){
+        this.id = id;
+        this.name = name;
+        this.secondName = secondName;
+
+    }
+    public User(long id, String name, String secondName,String login, String password){
+        this.id = id;
+        this.name = name;
+        this.secondName = secondName;
+        this.password=password;
+        this.login = login;
+    }
+    public User(long id, String name, String secondName, AddressDataSet address,List<PhoneDataSet> phones) {
+        this.id=id;
+        this.name = name;
+        this.secondName = secondName;
+        this.address = address;
+        this.phones=phones;
+    }
     public long getId() {
         return id;
     }
@@ -38,34 +70,6 @@ public class User {
         this.secondName = secondName;
     }
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private AddressDataSet address;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<PhoneDataSet> phones= new ArrayList<>(  );
-
-    public User(){}
-
-    public User(long id, String name, String secondName){
-        this.id = id;
-        this.name = name;
-        this.secondName = secondName;
-
-    }
-    public User(long id, String name, String secondName, String password){
-        this.id = id;
-        this.name = name;
-        this.secondName = secondName;
-        this.password=password;
-    }
-    public User(long id, String name, String secondName, AddressDataSet address,List<PhoneDataSet> phones) {
-        this.id=id;
-        this.name = name;
-        this.secondName = secondName;
-        this.address = address;
-        this.phones=phones;
-    }
-
     public AddressDataSet getAddress() {
         return address;
     }
@@ -78,6 +82,21 @@ public class User {
     }
     public void setPhones(List<PhoneDataSet> phones) {
         this.phones = phones;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override
@@ -94,16 +113,8 @@ public class User {
         stringBuilder.append( "Address = "+getAddress()+";" );
         stringBuilder.append( "}" );
 
-
-
         return stringBuilder.toString();
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

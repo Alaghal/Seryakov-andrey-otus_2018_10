@@ -1,7 +1,12 @@
 package ru.otus.l11.hibernate;
 
-public interface Repository {
+import java.util.List;
 
-    public <T>T load(long id, Class<T> clazz);
-    public <T> void save(T object );
+public interface Repository<T> {
+
+    public T load(long id, Class<T> clazz);
+    public  void save(T object );
+    public  void delete(T object);
+    List<T> getAll(Class<T> clazz);
+    <V>T getByValue(String nameField,V value,Class<T> clazz );
 }

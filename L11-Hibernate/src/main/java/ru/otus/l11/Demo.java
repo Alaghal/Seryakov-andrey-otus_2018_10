@@ -4,9 +4,8 @@ import ru.otus.l10.orm.users.AddressDataSet;
 import ru.otus.l10.orm.users.PhoneDataSet;
 import ru.otus.l10.orm.users.User;
 import ru.otus.l11.hibernate.FactoryRepositories;
-import ru.otus.l11.hibernate.FactoryUserRepository;
+import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
 import ru.otus.l11.hibernate.Repository;
-import ru.otus.l11.hibernate.UserRepository;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,8 +14,8 @@ import java.util.List;
 public class Demo {
     public static void main(String... arg) throws SQLException {
 
-        FactoryRepositories  facoryRepos = new FactoryUserRepository();
-        Repository hFunction = facoryRepos.creatRepository();
+        FactoryRepositories  facoryRepos = new FactoryUserRepositoryOfHibernate();
+        Repository hFunction = facoryRepos.createRepository();
 
         User userInsert = new User( 1, "Forest", "Gump" );
         User userUpdate = new User( 1, "Test", "Gump" );
@@ -41,9 +40,9 @@ public class Demo {
 
 
         hFunction.save( userInsert );
-        User userOfInsert =  hFunction.load( userInsert.getId(), User.class );
+        User userOfInsert = (User) hFunction.load( userInsert.getId(), User.class );
         hFunction.save( userUpdate );
-        User userOfUpdate = hFunction.load( userUpdate.getId(), User.class );
+        User userOfUpdate = (User) hFunction.load( userUpdate.getId(), User.class );
 
         System.out.println( "Insert user " + userOfInsert.toString() );
         System.out.println( "Update user " + userOfUpdate.toString() );
