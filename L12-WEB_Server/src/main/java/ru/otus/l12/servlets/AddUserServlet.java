@@ -10,21 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-public class UserServlet extends HttpServlet {
-
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws IOException {
+public class AddUserServlet extends HttpServlet {
+    @Override
+    protected  void doPost(HttpServletRequest request,
+                           HttpServletResponse response) throws IOException {
         Gson gson = new Gson();
-        var names = request.getParameterValues( "name" );
+        User user = gson.fromJson( request.getReader(),User.class );
         Repository repos = new FactoryUserRepositoryOfHibernate().createRepository();
         UserService userService = new UserService( repos );
-        List<User> listUser = userService.getUsers( names );
-
-        response.setContentType( "text/html;charset=utf-8" );
-        response.getWriter().println( gson.toJson( listUser ) );
-        response.setStatus( HttpServletResponse.SC_OK );
+        userService.addUsers( user );
     }
+
 }

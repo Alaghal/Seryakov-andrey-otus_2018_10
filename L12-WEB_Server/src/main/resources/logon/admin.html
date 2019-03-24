@@ -5,17 +5,15 @@
     <title>Авторизация</title>
 </head>
 <body>
-<form action="/Login.html"  id="logonForm">
-    <fieldset>
-        <legend>Страница авторизации</legend>
-        <p><label for="login">Login<em>*</em></label><input type="text" id="login"></p>
-        <p><label for="email">Password</label><input type="email" id="email"></p>
-    </fieldset>
-    <p><input type="submit" value="Войти"></p>
+<form action="/addUser.html"  id="addUser">
+    <p><input type="submit" value="Добавить пользователя"></p>
+</form>>
+<form action="/users"  id="users">
+    <p><input type="submit" value="Получить пользователей"></p>
 </form>>
 
 <script>
-    document.getElementById('logonForm').addEventListener('submit', submitForm);
+    document.getElementById('addUser').addEventListener('submit', submitForm);
 
     function submitForm(event) {
 

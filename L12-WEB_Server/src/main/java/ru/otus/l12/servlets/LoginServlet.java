@@ -7,6 +7,8 @@ import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
 import ru.otus.l11.hibernate.Repository;
 import ru.otus.l12.server.UserService;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +19,12 @@ public class LoginServlet  extends HttpServlet {
     protected  void doPost(HttpServletRequest request,
                            HttpServletResponse response) throws IOException{
 
-        Gson gson = new Gson();
-        User user = gson.fromJson( request.getReader(),User.class );
+       // Gson gson = new Gson();
+      //  User user = gson.fromJson( request.getReader(),User.class );
+        String name = request.getParameter("login");
+        String password = request.getParameter("password");
+        User user = new User(name,password);
+
         FactoryRepositories factory = new FactoryUserRepositoryOfHibernate();
         Repository repository = factory.createRepository();
         UserService userService = new UserService(repository);
@@ -30,12 +36,12 @@ public class LoginServlet  extends HttpServlet {
           Cookie cookie = new Cookie("login", user.getLogin());
           cookie.setMaxAge( 200000 );
           response.addCookie( cookie );
+          response.setContentType( "text/html;charset=utf-8" );
+          response.sendRedirect( "/admin.html" );
         } else {
             PrintWriter out = response.getWriter();
             out.println( "Do not correct login or password" );
         }
-
-
 
     }
 }
