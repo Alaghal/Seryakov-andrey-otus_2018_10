@@ -25,7 +25,6 @@ public class UserService {
     }
 
     public  List<MyUser> getUsers(){
-        System.out.println( "wwweq25" );
         List<MyUser> listUser =( List<MyUser>)  repository.getAll(  MyUser.class );
          System.out.println( listUser );
         System.out.println( "wwweq" );

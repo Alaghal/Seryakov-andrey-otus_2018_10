@@ -33,11 +33,8 @@ public class AddUserServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         MyUser myUser = userService.getUserForLogin( user.getLogin() );
         List<MyUser> myUserList = userService.getUsers();
-        for (var item:myUserList) {
-            out.println( "MyUser with login "+item.getLogin() +" un" );
 
-        }
-        out.println( "MyUser with login "+user.getLogin() +" added"+ myUser.getLogin() );
+        out.println( "MyUser with login "+user.getLogin() +" added");
 
 
     }

@@ -47,7 +47,8 @@ public class Demo {
         System.out.println( "Insert user " + userOfInsert.getName() );
         System.out.println( "Update user " + userOfUpdate.getId() );
 
-        List<MyUser> list = (List<MyUser>) hFunction.getAll( MyUser.class );
+        List<MyUser> list = (List<MyUser>) hFunction.getAll( MyUser.class);
+
         for (var itrm:list) {
             System.out.println( itrm.getName() );
         }

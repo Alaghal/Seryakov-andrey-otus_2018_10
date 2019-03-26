@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "user")
 public class MyUser {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private  long id;
 
     private  String name;
@@ -102,9 +102,11 @@ public class MyUser {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder("SimpleUser{"  );
+        StringBuilder stringBuilder = new StringBuilder("MyUser{"  );
         stringBuilder.append( "id=" + getId() );
         stringBuilder.append(  ", Name='" + getName()+ '\'');
+        stringBuilder.append(  ", Login='" + getLogin()+ '\'');
+        stringBuilder.append(  ", Password='" + getPassword()+ '\'');
         stringBuilder.append( ", SecondName='" + getSecondName() + "\'" );
         stringBuilder.append( " Phones {" );
         for (var phone:phones) {

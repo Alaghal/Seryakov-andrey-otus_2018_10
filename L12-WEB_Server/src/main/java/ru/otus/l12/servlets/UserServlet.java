@@ -23,16 +23,19 @@ public class UserServlet extends HttpServlet {
        // Gson gson = new Gson();
       //  var names = request.getParameterValues( "name" );
         UserService userService = new UserService( repository );
-        List<MyUser> listUser = userService.getUsers( );
-        for (var item: listUser) {
+      //  MyUser user = userService.getUserForLogin( "admin24" );
 
-        }
 
         response.setContentType( "text/html;charset=utf-8" );
         PrintWriter out = response.getWriter();
-        for (var item:listUser) {
-            out.println( "\n" + item.getName() );
+        List<MyUser> userlist = (List<MyUser>) repository.getAll( MyUser.class);
+        StringBuilder resultString = new StringBuilder();
+        System.out.println( userlist.size()+"-1234" );
+        for (var itrm:userlist) {
+            resultString.append(itrm.toString() + "\n") ;
         }
+
+        out.println( resultString.toString() );
 
        // response.getWriter().println( gson.toJson( listUser ) );
         response.setStatus( HttpServletResponse.SC_OK );

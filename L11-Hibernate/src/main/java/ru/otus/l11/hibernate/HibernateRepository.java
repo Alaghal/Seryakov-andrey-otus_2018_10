@@ -10,6 +10,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import ru.otus.l10.orm.users.MyUser;
 
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -92,21 +93,21 @@ public class HibernateRepository<T> implements Repository<T> {
     @Override
     public List<T> getAll(Class<T> clazz) {
         Transaction transaction = null;
-        System.out.println( "tegt" );
-        System.out.println( clazz.getSimpleName() );
+        String  sql= "from " +clazz.getSimpleName();
+        System.out.println("sql = " + sql);
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            CriteriaBuilder builder = session.getCriteriaBuilder();
+            List<T> listValues = session.createQuery(sql).list();
+/*            CriteriaBuilder builder = session.getCriteriaBuilder();
             CriteriaQuery<T> query = builder.createQuery( clazz );
             Root<T> root = query.from( clazz );
             query.select( root );
             Query<T> q = session.createQuery( query );
-            List<T> listValues = q.getResultList();
-            System.out.println( "tegt" );
+            List<T> listValues = q.getResultList();*/
+
             Hibernate.initialize( listValues );
             return listValues;
         } catch (Exception e) {
-            System.out.println( "teg24" );
             e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
