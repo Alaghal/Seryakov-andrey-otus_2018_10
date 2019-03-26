@@ -7,7 +7,12 @@ import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
+import ru.otus.l10.orm.users.MyUser;
+import ru.otus.l11.hibernate.FactoryRepositories;
+import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
+import ru.otus.l11.hibernate.Repository;
 import ru.otus.l12.filters.LogonFilter;
+import ru.otus.l12.servlets.AddUserServlet;
 import ru.otus.l12.servlets.LoginServlet;
 import ru.otus.l12.servlets.UserServlet;
 
@@ -30,6 +35,11 @@ public class MyServer implements ServerInterface {
 
     public void start() throws  Exception {
         resourcesExample();
+        MyUser user =new MyUser("admin","qwerty");
+        FactoryRepositories factory = new FactoryUserRepositoryOfHibernate();
+        Repository repository = factory.createRepository();
+        UserService userService = new UserService(repository);
+        userService.addUsers( user );
 
         ResourceHandler resourceHandler = new ResourceHandler();
         Resource resource = Resource.newClassPathResource(PUBLIC_HTML);
@@ -40,8 +50,10 @@ public class MyServer implements ServerInterface {
         context.addFilter( new FilterHolder( new LogonFilter() ),"/users",null );
         context.addFilter( new FilterHolder( new LogonFilter() ),"/addUser.html",null );
         context.addFilter( new FilterHolder( new LogonFilter() ),"/admin.html",null );
-        context.addServlet( new ServletHolder( new LoginServlet() ),"/Logon" );
-        context.addServlet(new ServletHolder(new UserServlet()), "/users");
+        context.addServlet( new ServletHolder( new LoginServlet(repository) ),"/Logon" );
+        context.addServlet( new ServletHolder(new UserServlet(repository)), "/users");
+        context.addServlet( new ServletHolder(new AddUserServlet(repository)), "/addUser");
+
 
 
         server.setHandler(new HandlerList(resourceHandler,context));

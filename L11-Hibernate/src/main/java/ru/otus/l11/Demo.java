@@ -2,7 +2,7 @@ package ru.otus.l11;
 
 import ru.otus.l10.orm.users.AddressDataSet;
 import ru.otus.l10.orm.users.PhoneDataSet;
-import ru.otus.l10.orm.users.User;
+import ru.otus.l10.orm.users.MyUser;
 import ru.otus.l11.hibernate.FactoryRepositories;
 import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
 import ru.otus.l11.hibernate.Repository;
@@ -17,8 +17,8 @@ public class Demo {
         FactoryRepositories  facoryRepos = new FactoryUserRepositoryOfHibernate();
         Repository hFunction = facoryRepos.createRepository();
 
-        User userInsert = new User( 1, "Forest", "Gump" );
-        User userUpdate = new User( 1, "Test", "Gump" );
+        MyUser userInsert = new MyUser( 1, "Forest", "Gump" );
+        MyUser userUpdate = new MyUser( 1, "Test", "Gump" );
 
         List<PhoneDataSet> phonesIsert = new ArrayList<>(  );
 
@@ -40,11 +40,16 @@ public class Demo {
 
 
         hFunction.save( userInsert );
-        User userOfInsert = (User) hFunction.load( userInsert.getId(), User.class );
+        MyUser userOfInsert = (MyUser) hFunction.load( userInsert.getId(), MyUser.class );
         hFunction.save( userUpdate );
-        User userOfUpdate = (User) hFunction.load( userUpdate.getId(), User.class );
+        MyUser userOfUpdate = (MyUser) hFunction.load( userUpdate.getId(), MyUser.class );
+         userOfUpdate = (MyUser)hFunction.getByValue( "name","Forest", MyUser.class );
+        System.out.println( "Insert user " + userOfInsert.getName() );
+        System.out.println( "Update user " + userOfUpdate.getId() );
 
-        System.out.println( "Insert user " + userOfInsert.toString() );
-        System.out.println( "Update user " + userOfUpdate.toString() );
+        List<MyUser> list = (List<MyUser>) hFunction.getAll( MyUser.class );
+        for (var itrm:list) {
+            System.out.println( itrm.getName() );
+        }
     }
 }

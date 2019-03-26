@@ -1,11 +1,8 @@
 package ru.otus.l12.server;
 
-import ru.otus.l10.orm.users.User;
-import ru.otus.l11.hibernate.FactoryRepositories;
-import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
+import ru.otus.l10.orm.users.MyUser;
 import ru.otus.l11.hibernate.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,17 +13,22 @@ public class UserService {
         this.repository = repository;
     }
 
-    public void addUsers(User user){
+    public void addUsers(MyUser user){
         repository.save( user );
 
     }
 
-    public  List<User> getUsers(String[] logins){
-        List<User> listUser = new ArrayList<>();
-        for (var name : logins) {
-            User user = (User) repository.getByValue( "login", name, User.class );
-            listUser.add( user );
-        }
+
+    public  MyUser getUserForLogin (String login){
+      MyUser my= (MyUser) repository.getByValue( "login",login,MyUser.class );
+      return my;
+    }
+
+    public  List<MyUser> getUsers(){
+        System.out.println( "wwweq25" );
+        List<MyUser> listUser =( List<MyUser>)  repository.getAll(  MyUser.class );
+         System.out.println( listUser );
+        System.out.println( "wwweq" );
         return listUser;
     }
 
@@ -34,7 +36,7 @@ public class UserService {
     public boolean authenticate(String name, String password) {
 
 
-        return Optional.ofNullable((User)repository.getByValue( "name",name, User.class ))
+        return Optional.ofNullable((MyUser)repository.getByValue( "login",name, MyUser.class ))
                 .map(user -> user.getPassword().equals(password))
                 .orElse(false);
     }

@@ -1,6 +1,7 @@
 package ru.otus.l11.hibernate;
 
 import com.github.fluent.hibernate.cfg.scanner.EntityScanner;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,6 +11,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -45,6 +47,7 @@ public class HibernateRepository<T> implements Repository<T> {
             transaction = session.beginTransaction();
             selected = session.load( clazz, id );
             session.getTransaction().commit();
+            Hibernate.initialize( selected );
             return selected;
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,6 +92,8 @@ public class HibernateRepository<T> implements Repository<T> {
     @Override
     public List<T> getAll(Class<T> clazz) {
         Transaction transaction = null;
+        System.out.println( "tegt" );
+        System.out.println( clazz.getSimpleName() );
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -97,8 +102,11 @@ public class HibernateRepository<T> implements Repository<T> {
             query.select( root );
             Query<T> q = session.createQuery( query );
             List<T> listValues = q.getResultList();
+            System.out.println( "tegt" );
+            Hibernate.initialize( listValues );
             return listValues;
         } catch (Exception e) {
+            System.out.println( "teg24" );
             e.printStackTrace();
             if (transaction != null) {
                 transaction.rollback();
@@ -118,7 +126,14 @@ public class HibernateRepository<T> implements Repository<T> {
             Root<T> root = query.from( clazz );
             query.select( root ).where( builder.equal( root.get( nameField ), inputValue ) );
             Query<T> q = session.createQuery( query );
-            T value = q.getSingleResult();
+            T value;
+            try {
+                 value = q.getSingleResult();
+                Hibernate.initialize( value );
+            }catch (NoResultException e){
+                System.out.println( "Not result" );
+                return null;
+            }
             return value;
         } catch (Exception e) {
             e.printStackTrace();

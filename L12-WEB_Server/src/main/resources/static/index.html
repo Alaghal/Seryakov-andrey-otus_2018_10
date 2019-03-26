@@ -5,16 +5,16 @@
     <title>Авторизация</title>
 </head>
 <body>
-<form action="/Logon"  id="logonForm">
+<form action="/Logon"  id="logonForm" method="post">
     <fieldset>
         <legend>Вход в админку</legend>
-        <p><label for="login">Login<em>*</em></label><input type="text" id="login"></p>
-        <p><label for="password">Password</label><input type="password" id="password"></p>
+        <p><label for="login">Login<em>*</em></label><input type="text" name="login" id="login"></p>
+        <p><label for="password">Password</label><input type="password" name="password" id="password"></p>
     </fieldset>
     <p><input type="submit" value="Войти"></p>
 </form>>
 
-<script>
+<!--<script>
     document.getElementById('logonForm').addEventListener('submit', submitForm);
 
     function submitForm(event) {
@@ -45,7 +45,7 @@
 
         console.log('Запрос отправляется');
     }
-</script>
+</script>-->
 
 </body>
 </html>

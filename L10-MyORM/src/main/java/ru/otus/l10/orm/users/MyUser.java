@@ -6,10 +6,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class MyUser {
     @Id
     @GeneratedValue
     private  long id;
+
     private  String name;
     private  String secondName;
     private  String password;
@@ -21,27 +22,27 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PhoneDataSet> phones= new ArrayList<>(  );
 
+    public MyUser(){}
 
-
-    public User(String login,String password){
+    public MyUser(String login, String password){
         this.login = login;
         this.password=password;
     }
 
-    public User(long id, String name, String secondName){
+    public MyUser(long id, String name, String secondName){
         this.id = id;
         this.name = name;
         this.secondName = secondName;
 
     }
-    public User(long id, String name, String secondName,String login, String password){
+    public MyUser(long id, String name, String secondName, String login, String password){
         this.id = id;
         this.name = name;
         this.secondName = secondName;
         this.password=password;
         this.login = login;
     }
-    public User(long id, String name, String secondName, AddressDataSet address,List<PhoneDataSet> phones) {
+    public MyUser(long id, String name, String secondName, AddressDataSet address, List<PhoneDataSet> phones) {
         this.id=id;
         this.name = name;
         this.secondName = secondName;
