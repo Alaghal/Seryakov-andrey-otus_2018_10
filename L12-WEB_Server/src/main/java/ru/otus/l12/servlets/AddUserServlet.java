@@ -27,14 +27,13 @@ public class AddUserServlet extends HttpServlet {
         String login = request.getParameter( "login" );
         String password = request.getParameter( "password" );
         MyUser user = new MyUser(login,password);
-        Repository repos = new FactoryUserRepositoryOfHibernate().createRepository();
-        UserService userService = new UserService( repos );
+        UserService userService = new UserService( repository );
         userService.addUsers( user );
         PrintWriter out = response.getWriter();
         MyUser myUser = userService.getUserForLogin( user.getLogin() );
         List<MyUser> myUserList = userService.getUsers();
 
-        out.println( "MyUser with login "+user.getLogin() +" added");
+        out.println( "MyUser with login "+user.getLogin()+" " +user.getId() +" added");
 
 
     }

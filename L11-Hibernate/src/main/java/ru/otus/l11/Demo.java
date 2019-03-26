@@ -50,7 +50,7 @@ public class Demo {
         List<MyUser> list = (List<MyUser>) hFunction.getAll( MyUser.class);
 
         for (var itrm:list) {
-            System.out.println( itrm.getName() );
+            System.out.println( itrm.getName() + itrm.getId() );
         }
     }
 }
