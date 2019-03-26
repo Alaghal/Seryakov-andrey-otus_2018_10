@@ -1,5 +1,5 @@
 # Seryakov-andrey-otus_2018_10
 For Otus HW 
-Сдудент:
+Студент:
 Andrey Seryakov(Андрей Серяков)
 seryakov.andreyv@gmail.com
