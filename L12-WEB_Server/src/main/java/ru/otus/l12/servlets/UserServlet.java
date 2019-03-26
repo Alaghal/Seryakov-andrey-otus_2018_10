@@ -20,11 +20,8 @@ public class UserServlet extends HttpServlet {
      }
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
-       // Gson gson = new Gson();
-      //  var names = request.getParameterValues( "name" );
-        UserService userService = new UserService( repository );
-      //  MyUser user = userService.getUserForLogin( "admin24" );
 
+        UserService userService = new UserService( repository );
 
         response.setContentType( "text/html;charset=utf-8" );
         PrintWriter out = response.getWriter();
@@ -36,8 +33,7 @@ public class UserServlet extends HttpServlet {
         }
 
         out.println( resultString.toString() );
-
-       // response.getWriter().println( gson.toJson( listUser ) );
+        
         response.setStatus( HttpServletResponse.SC_OK );
     }
 }

@@ -24,18 +24,15 @@ public class LoginServlet  extends HttpServlet {
        // MyUser user = gson.fromJson( request.getReader(),MyUser.class );
         String name = request.getParameter("login");
         String password = request.getParameter("password");
-        System.out.println( "eeeer" );
         System.out.println( name );
         System.out.println( password );
         MyUser user = new MyUser(name,password);
-        System.out.println( "eeeerw" );
         UserService userService = new UserService(repository);
-        System.out.println( "eeeer5" );
+
         if( userService.authenticate(user.getLogin(),user.getPassword())){
           HttpSession session = request.getSession();
           session.setAttribute("login",user.getLogin() );
           session.setMaxInactiveInterval( 200000 );
-            System.out.println( "eeee7" );
           Cookie cookie = new Cookie("login", user.getLogin());
           cookie.setMaxAge( 200000 );
           response.addCookie( cookie );
@@ -43,7 +40,6 @@ public class LoginServlet  extends HttpServlet {
           response.sendRedirect( "logon/admin.html");
           response.setStatus( HttpServletResponse.SC_OK );
         } else {
-            System.out.println( "eeeer10" );
             PrintWriter out = response.getWriter();
             out.println( "Do not correct login or password" );
         }
