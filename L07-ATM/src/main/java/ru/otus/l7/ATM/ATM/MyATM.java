@@ -3,7 +3,6 @@ package ru.otus.l7.ATM.ATM;
 import ru.otus.l7.ATM.enums.StatusATM;
 import ru.otus.l7.ATM.cassettes.*;
 import ru.otus.l7.ATM.interfaces.ATM;
-import ru.otus.l7.ATM.interfaces.Command;
 
 import java.util.*;
 
@@ -114,7 +113,7 @@ public class MyATM implements ATM {
     }
 
     @Override
-    public void update(Command  comd) {
+    public void update(String comd) {
          comd.execute();
     }
 

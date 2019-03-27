@@ -33,7 +33,7 @@ public class UserServlet extends HttpServlet {
         }
 
         out.println( resultString.toString() );
-        
+
         response.setStatus( HttpServletResponse.SC_OK );
     }
 }
