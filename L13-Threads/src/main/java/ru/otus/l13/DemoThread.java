@@ -1,7 +1,6 @@
 package ru.otus.l13;
 
 public class DemoThread {
-    volatile boolean printPossibleFlag = false;
     volatile String lastNameThreadWorked = null;
 
     public static void main(String[] arg) throws InterruptedException {
@@ -17,57 +16,44 @@ public class DemoThread {
     }
 
     private void operationForThread(String nameThread) {
-        increment( nameThread, 0 );
-        decrement( nameThread, 10 );
+        action( nameThread, +1 );
+        action( nameThread, -1 );
     }
 
-    public synchronized void increment(String nameThread, int counter) {
-        while (counter < 10) {
-            printPossibleFlag = false;
+    public void action(String nameThread, int actionType) {
 
-            counter++;
-            System.out.println( "Thread " + nameThread + " print number " + counter );
-            printPossibleFlag = true;
-            if (lastNameThreadWorked == null) {
-                lastNameThreadWorked = nameThread;
+        if (actionType > 0) {
+            int counter = 0;
+            while (counter < 10) {
+                counter++;
+                printCounterNumberOfThread( nameThread, counter );
             }
 
-            while (printPossibleFlag && lastNameThreadWorked == nameThread) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-
-                }
+        } else if (actionType < 0) {
+            int counter = 10;
+            while (counter > 1) {
+                counter--;
+                printCounterNumberOfThread( nameThread, counter );
             }
-            lastNameThreadWorked = nameThread;
-            notify();
-
         }
     }
 
-    public synchronized void decrement(String nameThread, int counter) {
-        while (counter > 1) {
-            printPossibleFlag = false;
+    public synchronized void printCounterNumberOfThread(String nameThread, int counter) {
+        System.out.println( "Thread " + nameThread + " print number " + counter );
 
-            counter--;
-            System.out.println( "Thread " + nameThread + " print number " + counter );
-            printPossibleFlag = true;
-            if (lastNameThreadWorked == null) {
-                lastNameThreadWorked = nameThread;
-            }
-
-
-            while (printPossibleFlag && lastNameThreadWorked == nameThread) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-
-                }
-            }
+        if (lastNameThreadWorked == null) {
             lastNameThreadWorked = nameThread;
-            notify();
-
         }
+
+        while (lastNameThreadWorked.equals( nameThread )) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+
+            }
+        }
+        lastNameThreadWorked = nameThread;
+        notify();
     }
 
 }
