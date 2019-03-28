@@ -19,13 +19,9 @@ public class LoginServlet  extends HttpServlet {
     @Override
     protected  void doPost(HttpServletRequest request,
                            HttpServletResponse response) throws IOException{
-
-       // Gson gson = new Gson();
-       // MyUser user = gson.fromJson( request.getReader(),MyUser.class );
         String name = request.getParameter("login");
         String password = request.getParameter("password");
-        System.out.println( name );
-        System.out.println( password );
+
         MyUser user = new MyUser(name,password);
         UserService userService = new UserService(repository);
 
@@ -33,16 +29,22 @@ public class LoginServlet  extends HttpServlet {
           HttpSession session = request.getSession();
           session.setAttribute("login",user.getLogin() );
           session.setMaxInactiveInterval( 200000 );
-          Cookie cookie = new Cookie("login", user.getLogin());
-          cookie.setMaxAge( 200000 );
-          response.addCookie( cookie );
+
+          response.addCookie( createCookieForLoginUser(user.getLogin()) );
           response.setContentType( "text/html;charset=utf-8" );
           response.sendRedirect( "logon/admin.html");
           response.setStatus( HttpServletResponse.SC_OK );
+
         } else {
             PrintWriter out = response.getWriter();
             out.println( "Do not correct login or password" );
         }
 
+    }
+
+    private Cookie createCookieForLoginUser(String login){
+        Cookie cookie = new Cookie("login",login );
+        cookie.setMaxAge( 200000 );
+        return cookie;
     }
 }

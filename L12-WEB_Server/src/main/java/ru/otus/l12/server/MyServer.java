@@ -11,6 +11,7 @@ import ru.otus.l10.orm.users.MyUser;
 import ru.otus.l11.hibernate.FactoryRepositories;
 import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
 import ru.otus.l11.hibernate.Repository;
+import ru.otus.l12.OtusHelperTemplate.TemplateProcessor;
 import ru.otus.l12.filters.LogonFilter;
 import ru.otus.l12.servlets.AddUserServlet;
 import ru.otus.l12.servlets.LoginServlet;
@@ -46,12 +47,13 @@ public class MyServer implements ServerInterface {
         resourceHandler.setBaseResource(resource);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        TemplateProcessor templateProcessor = new TemplateProcessor();
 
         context.addFilter( new FilterHolder( new LogonFilter() ),"/users",null );
         context.addFilter( new FilterHolder( new LogonFilter() ),"/addUser.html",null );
         context.addFilter( new FilterHolder( new LogonFilter() ),"/admin.html",null );
         context.addServlet( new ServletHolder( new LoginServlet(repository) ),"/Logon" );
-        context.addServlet( new ServletHolder(new UserServlet(repository)), "/users");
+        context.addServlet( new ServletHolder(new UserServlet(repository,templateProcessor)), "/users");
         context.addServlet( new ServletHolder(new AddUserServlet(repository)), "/addUser");
 
 
