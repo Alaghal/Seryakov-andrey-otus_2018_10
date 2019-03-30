@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "user")
 public class MyUser {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private  long id;
 
     private  String name;
@@ -35,6 +35,14 @@ public class MyUser {
         this.secondName = secondName;
 
     }
+    
+    public MyUser( String name, String secondName, String login, String password){
+        this.name = name;
+        this.secondName = secondName;
+        this.password=password;
+        this.login = login;
+    }
+
     public MyUser(long id, String name, String secondName, String login, String password){
         this.id = id;
         this.name = name;

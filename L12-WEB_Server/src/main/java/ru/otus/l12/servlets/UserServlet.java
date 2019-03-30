@@ -27,14 +27,8 @@ public class UserServlet extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws IOException {
         List<MyUser> users = (List<MyUser>) repository.getAll( MyUser.class );
-        StringBuilder resultString = new StringBuilder();
-
-        for (var itrm : users) {
-            resultString.append( "<p> " + itrm.toString() + " </p>" );
-        }
-
         Map<String, Object> userMap = new HashMap<>();
-        userMap.put( USERS_PARAMETR_FOR_HTML, resultString.toString() );
+        userMap.put( USERS_PARAMETR_FOR_HTML, users );
 
         response.setContentType( "text/html;charset=utf-8" );
         response.getWriter().println( templateProcessor.getPage( USERS_PAGE_TEMPLATE, userMap ) );
