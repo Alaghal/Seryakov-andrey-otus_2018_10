@@ -5,7 +5,26 @@
     <title>Пользователи</title>
 </head>
 <body>
-${users}
+<H2>Текущие пользователи</H2>
+<#list users>
+  <table>
+      <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>SecondName</th>
+          <th>Login</th>
+          <th>Password</th>
+      </tr>
+      <#items as user>
+      <tr class="${user?item_parity}Row">
+          <td>${user?counter}
+          <td>${user.name!'missing'}
+          <td>${user.secondName!'missing'}
+          <td>${user.login}
+          <td>${user.password}
+      </#items>
+  </table>
+</#list>
 
 <form action="logon/admin.html"  id="toAdminMenu">
     <p><input type="submit" value="Вернуться в меню администратора"></p>

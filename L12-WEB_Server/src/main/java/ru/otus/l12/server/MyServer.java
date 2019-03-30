@@ -36,7 +36,7 @@ public class MyServer implements ServerInterface {
 
     public void start() throws  Exception {
         resourcesExample();
-        MyUser user =new MyUser("admin","qwerty");
+        MyUser user =new MyUser("Иван","Иванов","admin","qwerty");
         FactoryRepositories factory = new FactoryUserRepositoryOfHibernate();
         Repository repository = factory.createRepository();
         UserService userService = new UserService(repository);
