@@ -1,7 +1,7 @@
 package ru.otus.l12.servlets;
 
 import ru.otus.l10.orm.users.MyUser;
-import ru.otus.l11.hibernate.Repository;
+import ru.otus.l11.hibernate.RepositoryImp;
 import ru.otus.l12.server.UserService;
 
 import javax.servlet.http.*;
@@ -10,9 +10,9 @@ import java.io.PrintWriter;
 
 public class LoginServlet  extends HttpServlet {
 
-    private final Repository repository;
+    private final RepositoryImp repository;
 
-    public LoginServlet(Repository repository){
+    public LoginServlet(RepositoryImp repository){
         this.repository = repository;
     }
 

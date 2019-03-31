@@ -1,15 +1,15 @@
 package ru.otus.l12.server;
 
 import ru.otus.l10.orm.users.MyUser;
-import ru.otus.l11.hibernate.Repository;
+import ru.otus.l11.hibernate.RepositoryImp;
 
 import java.util.List;
 import java.util.Optional;
 
 public class UserService {
-    private final Repository repository;
+    private final RepositoryImp repository;
 
-    public UserService(Repository repository) {
+    public UserService(RepositoryImp repository) {
         this.repository = repository;
     }
 
@@ -17,7 +17,6 @@ public class UserService {
         repository.save( user );
 
     }
-
 
     public  MyUser getUserForLogin (String login){
       MyUser my= (MyUser) repository.getByValue( "login",login,MyUser.class );
@@ -32,8 +31,6 @@ public class UserService {
 
 
     public boolean authenticate(String name, String password) {
-
-
         return Optional.ofNullable((MyUser)repository.getByValue( "login",name, MyUser.class ))
                 .map(user -> user.getPassword().equals(password))
                 .orElse(false);

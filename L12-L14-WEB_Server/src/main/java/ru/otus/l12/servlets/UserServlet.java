@@ -1,7 +1,7 @@
 package ru.otus.l12.servlets;
 
 import ru.otus.l10.orm.users.MyUser;
-import ru.otus.l11.hibernate.Repository;
+import ru.otus.l11.hibernate.RepositoryImp;
 import ru.otus.l12.OtusHelperTemplate.TemplateProcessor;
 
 import javax.servlet.http.HttpServlet;
@@ -17,9 +17,9 @@ public class UserServlet extends HttpServlet {
     private static final String USERS_PAGE_TEMPLATE = "Users.html";
     private static final String USERS_PARAMETR_FOR_HTML = "users";
 
-    private final Repository repository;
+    private final RepositoryImp repository;
 
-    public UserServlet(Repository repository, TemplateProcessor templateProcessor) {
+    public UserServlet(RepositoryImp repository, TemplateProcessor templateProcessor) {
         this.templateProcessor = templateProcessor;
         this.repository = repository;
     }

@@ -1,21 +1,18 @@
 package ru.otus.l12.servlets;
 
 import ru.otus.l10.orm.users.MyUser;
-import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
-import ru.otus.l11.hibernate.Repository;
+import ru.otus.l11.hibernate.RepositoryImp;
 import ru.otus.l12.server.UserService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 public class AddUserServlet extends HttpServlet {
-    private final Repository repository;
+    private final RepositoryImp repository;
 
-    public AddUserServlet(Repository repository){
+    public AddUserServlet(RepositoryImp repository){
         this.repository = repository;
     }
 

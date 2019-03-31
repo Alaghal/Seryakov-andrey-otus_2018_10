@@ -10,7 +10,7 @@ import org.eclipse.jetty.util.resource.Resource;
 import ru.otus.l10.orm.users.MyUser;
 import ru.otus.l11.hibernate.FactoryRepositories;
 import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
-import ru.otus.l11.hibernate.Repository;
+import ru.otus.l11.hibernate.RepositoryImp;
 import ru.otus.l12.OtusHelperTemplate.TemplateProcessor;
 import ru.otus.l12.filters.LogonFilter;
 import ru.otus.l12.servlets.AddUserServlet;
@@ -38,7 +38,7 @@ public class MyServer implements ServerInterface {
         resourcesExample();
         MyUser user =new MyUser("Иван","Иванов","admin","qwerty");
         FactoryRepositories factory = new FactoryUserRepositoryOfHibernate();
-        Repository repository = factory.createRepository();
+        RepositoryImp repository = factory.createRepository();
         UserService userService = new UserService(repository);
         userService.addUsers( user );
 

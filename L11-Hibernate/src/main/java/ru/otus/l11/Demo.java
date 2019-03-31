@@ -5,7 +5,7 @@ import ru.otus.l10.orm.users.PhoneDataSet;
 import ru.otus.l10.orm.users.MyUser;
 import ru.otus.l11.hibernate.FactoryRepositories;
 import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
-import ru.otus.l11.hibernate.Repository;
+import ru.otus.l11.hibernate.RepositoryImp;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class Demo {
     public static void main(String... arg) throws SQLException {
 
         FactoryRepositories  facoryRepos = new FactoryUserRepositoryOfHibernate();
-        Repository hFunction = facoryRepos.createRepository();
+        RepositoryImp hFunction = facoryRepos.createRepository();
 
         MyUser userInsert = new MyUser( 1, "Forest", "Gump" );
         MyUser userUpdate = new MyUser( 1, "Test", "Gump" );
