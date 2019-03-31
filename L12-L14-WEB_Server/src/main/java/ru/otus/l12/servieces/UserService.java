@@ -1,4 +1,4 @@
-package ru.otus.l12.server;
+package ru.otus.l12.servieces;
 
 import ru.otus.l10.orm.users.MyUser;
 import ru.otus.l11.hibernate.RepositoryImp;

@@ -13,6 +13,7 @@ import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
 import ru.otus.l11.hibernate.RepositoryImp;
 import ru.otus.l12.OtusHelperTemplate.TemplateProcessor;
 import ru.otus.l12.filters.LogonFilter;
+import ru.otus.l12.servieces.UserService;
 import ru.otus.l12.servlets.AddUserServlet;
 import ru.otus.l12.servlets.LoginServlet;
 import ru.otus.l12.servlets.UserServlet;
