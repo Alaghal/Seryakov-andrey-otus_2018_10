@@ -76,15 +76,5 @@ class MyDepartTest {
         assertEquals( expected,actual);
     }
 
-    @Test
-    void setOriginalyStatementATM() {
-        ATM atm = mock(ATM.class);
-        doNothing().when(atm).update( "SetOriginalConditionATM" );
 
-        MyDepart depart = new MyDepart();
-        depart.addATM(atm);
-        depart.setOriginalyStatementATM();
-
-        verify(atm,times( 1 )).update( "SetOriginalConditionATM" );
-    }
 }
