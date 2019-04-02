@@ -1,5 +1,5 @@
 package ru.otus.L14.services;
 
-public interface EntityPackagePathProvider {
+public interface EntityPathProviderService {
     public String  getEntityPackagePath();
 }

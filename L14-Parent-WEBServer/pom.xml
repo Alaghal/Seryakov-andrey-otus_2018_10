@@ -12,6 +12,8 @@
     <modules>
         <module>../L14_WEB_Server_WAR</module>
         <module>../L11-Hibernate</module>
+        <module>../L10-MyORM</module>
+        <module>../L04-TetsFraemwork</module>
     </modules>
 
 

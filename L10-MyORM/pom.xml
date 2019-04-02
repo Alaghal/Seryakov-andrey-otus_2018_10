@@ -8,6 +8,11 @@
     <artifactId>L10-MyORM</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <parent>
+        <groupId>Seryakov.av.org</groupId>
+        <artifactId>Parent-WEB-Server</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

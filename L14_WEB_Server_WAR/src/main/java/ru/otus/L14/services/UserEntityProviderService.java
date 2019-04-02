@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserEntityProvider implements EntityPackagePathProvider {
+public class UserEntityProviderService implements EntityPathProviderService {
     private final String PATH_FOR_PACKAGE_ENTITY="ru.otus.l10.orm.users";
 
     @Override
