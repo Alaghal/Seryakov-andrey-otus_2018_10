@@ -8,6 +8,12 @@
     <artifactId>L11-Hibernate</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <parent>
+        <groupId>Seryakov.av.org</groupId>
+        <artifactId>Parent-WEB-Server</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
