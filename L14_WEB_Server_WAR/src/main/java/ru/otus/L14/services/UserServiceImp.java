@@ -1,5 +1,7 @@
 package ru.otus.L14.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.otus.l10.orm.users.MyUser;
 import ru.otus.l11.hibernate.RepositoryImp;
@@ -9,6 +11,9 @@ import java.util.List;
 @Service
 public class UserServiceImp implements UserService {
     private final RepositoryImp repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserServiceImp(RepositoryImp repository) {
         this.repository = repository;
@@ -29,6 +34,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void saveUserToDB(MyUser user) {
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.save( user );
 
     }

@@ -4,7 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -18,6 +18,7 @@ import ru.otus.L14.services.UserDetailsServiceImpl;
 @Configuration
 @ComponentScan
 @EnableWebMvc
+@Import(SecurityConfig.class)
 public class WebConfig  {
 
     private final ApplicationContext applicationContext;
@@ -26,12 +27,6 @@ public class WebConfig  {
         this.applicationContext = applicationContext;
     }
 
-    @Bean
-    public UserDetailsService getUserDetailsService(){
-        return new UserDetailsServiceImpl();
-    }
-
-
 
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
@@ -39,7 +34,7 @@ public class WebConfig  {
         templateResolver.setApplicationContext(this.applicationContext);
         templateResolver.setPrefix("/WEB-INF/templates/");
         templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode(TemplateMode.HTML);
+        templateResolver.setTemplateMode("XHTML");
         templateResolver.setCacheable(true);
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;

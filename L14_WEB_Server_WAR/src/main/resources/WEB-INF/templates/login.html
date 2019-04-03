@@ -5,13 +5,13 @@
 </head>
 <body>
 <h1>Login page</h1>
-<p th:if="${loginError}" class="error">Wrong user or password</p>
-<form th:action="@{/j_spring_security_check}" method="post">
-    <label for="j_username">Username</label>:
-    <input type="text" id="j_username" name="j_username" autofocus="autofocus" /> <br />
-    <label for="j_password">Password</label>:
-    <input type="password" id="j_password" name="j_password" /> <br />
-    <input type="submit" value="Log in" />
+<p th:if="${param.error}">
+    Bad Credentials
+</p>
+<form th:action="@{/appLogin}" method="POST">
+    User Name : <input type="text" name="app_username"/> <br/><br/>
+    Password: <input type="password" name="app_password"/> <br/><br/>
+    <input type="submit" value="Login"/>
 </form>
 </body>
 </html>

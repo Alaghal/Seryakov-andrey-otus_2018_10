@@ -23,7 +23,12 @@
     </style>
 </head>
 <body>
-
+<div sec:authorize="isAnonymous()">
+    <form th:action="@{/appLogout}" method="POST">
+        <input type="submit" value="Sign in"/>
+    </form>
+</div>
+<div sec:authorize="isAuthenticated()">
 <form id="create-form" th:action="@{/user/save}" th:object="${user}" th:method="post" accept-charset="utf-8">
     <h1>New User:</h1>
 
@@ -36,6 +41,6 @@
         <button type="submit">Save</button>
     </div>
 </form>
-
+</div>
 </body>
 </html>

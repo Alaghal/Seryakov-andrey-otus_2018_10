@@ -23,7 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding><project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>5.1.5.RELEASE</spring.version>
         <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
-        <spring.securiry>3.2.0.RELEASE</spring.securiry>
+        <spring.securiry>5.1.5.RELEASE</spring.securiry>
     </properties>
 
 
@@ -95,6 +95,12 @@
             <artifactId>thymeleaf-spring5</artifactId>
             <version>${thymeleaf.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>Seryakov.av.org</groupId>
             <artifactId>L11-Hibernate</artifactId>
