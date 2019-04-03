@@ -18,7 +18,6 @@ import ru.otus.L14.services.UserDetailsServiceImpl;
 @Configuration
 @ComponentScan
 @EnableWebMvc
-@Import(SecurityConfig.class)
 public class WebConfig  {
 
     private final ApplicationContext applicationContext;

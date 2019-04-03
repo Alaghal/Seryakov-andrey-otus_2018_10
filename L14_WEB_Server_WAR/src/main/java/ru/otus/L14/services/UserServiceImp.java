@@ -12,8 +12,7 @@ import java.util.List;
 public class UserServiceImp implements UserService {
     private final RepositoryImp repository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+  
 
     public UserServiceImp(RepositoryImp repository) {
         this.repository = repository;

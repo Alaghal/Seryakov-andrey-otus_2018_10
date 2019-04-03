@@ -16,7 +16,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{WebConfig.class,SecurityConfig.class};
+        return new Class<?>[]{WebConfig.class};
     }
 
     @Override
@@ -30,9 +30,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         encodingFilter.setEncoding("UTF-8");
         encodingFilter.setForceEncoding(true);
 
-        DelegatingFilterProxy delegateFilterProxy = new DelegatingFilterProxy();
-        delegateFilterProxy.setTargetBeanName("springSecurityFilterChain");
-
-        return new Filter[]{encodingFilter,delegateFilterProxy};
+        return new Filter[]{encodingFilter};
     }
 }
