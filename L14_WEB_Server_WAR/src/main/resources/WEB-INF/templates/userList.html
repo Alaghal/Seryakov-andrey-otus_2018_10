@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8"/>
     <title>List of all users</title>
@@ -15,14 +16,8 @@
     </style>
 </head>
 <body>
-<div sec:authorize="isAnonymous()">
-    <form th:action="@{/appLogout}" method="POST">
-        <input type="submit" value="Sign in"/>
-    </form>
-</div>
 
-<div sec:authorize=" isAuthenticated()">
-    Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
+Logged in user: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
     <form th:action="@{/appLogout}" method="POST">
         <input type="submit" value="Logout"/>
     </form>
@@ -43,6 +38,5 @@
         </tbody>
     </table>
     <a th:href="@{/user/create}" href="userCreate.html">New user</a>
-</div>
 </body>
 </html>

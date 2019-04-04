@@ -21,45 +21,25 @@ import ru.otus.L14.services.UserDetailsServiceImpl;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserDetailsService userDetailsService;
-
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-       // auth.authenticationProvider(authProvider());
-      //  auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        auth.inMemoryAuthentication().withUser("admin").password(encoder.encode(  "qwerty")).roles("ADMIN");
+    public void configureGlobal(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
+        auth.inMemoryAuthentication().withUser("admin2").password(passwordEncoder.encode("admin2")).roles("ADMIN");
 
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().
-                antMatchers("/user/").access("hasRole('ROLE_ADMIN')").
-                and().formLogin().  //login configuration
-                loginPage("/login").
-                loginProcessingUrl("/appLogin").
-                usernameParameter("app_username").
-                passwordParameter("app_password").
-                defaultSuccessUrl("/user/list").
-                and().logout().    //logout configuration
-                logoutUrl("/appLogout").
-                logoutSuccessUrl("/login");
-
+        http.authorizeRequests().antMatchers("/appLogin", "/login").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/**").access("hasRole('ROLE_ADMIN')")
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/appLogin").usernameParameter("app_username").passwordParameter("app_password")
+                .defaultSuccessUrl("/user/list")
+                .and()
+                .logout().logoutUrl("/appLogout").logoutSuccessUrl("/login");
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public DaoAuthenticationProvider authProvider() {
-      DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-      authProvider.setUserDetailsService(userDetailsService);
-      authProvider.setPasswordEncoder(passwordEncoder());
-       return authProvider;
-    }
-
 }
