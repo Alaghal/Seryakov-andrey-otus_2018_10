@@ -46,6 +46,8 @@ public class WebConfig  {
         return templateEngine;
     }
 
+
+
     @Bean
     public ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
