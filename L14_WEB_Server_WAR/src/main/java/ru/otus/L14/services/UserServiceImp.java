@@ -12,7 +12,7 @@ import java.util.List;
 public class UserServiceImp implements UserService {
     private final RepositoryImp repository;
 
-  
+
 
     public UserServiceImp(RepositoryImp repository) {
         this.repository = repository;
