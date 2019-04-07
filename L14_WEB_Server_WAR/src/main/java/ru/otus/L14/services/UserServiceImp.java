@@ -5,17 +5,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.otus.l10.orm.users.MyUser;
 import ru.otus.l11.hibernate.RepositoryImp;
+import ru.otus.l15.messageSystem.MessageSystemContext;
+import ru.otus.l15.messageSystem.entity.Address;
+import ru.otus.l15.messageSystem.entity.Addressee;
 
 import java.util.List;
 
 @Service
 public class UserServiceImp implements UserService {
-    private final RepositoryImp repository;
+    private  RepositoryImp repository;
+    private  Address address;
+    private  MessageSystemContext context;
 
 
 
-    public UserServiceImp(RepositoryImp repository) {
+    public UserServiceImp(RepositoryImp repository,
+                          AddressFrontendService frontendService,
+                          MessgeSystemContextService messgeSystemContextService,
+                          AddressDBService dbService) {
         this.repository = repository;
+        this.address=frontendService.getFrontendAddress();
+        this.context=messgeSystemContextService.getMessageSystemContext();
+        context.setDbAddress(dbService.getAddressDbForUser());
+        context.setFrontAddress( address);
+
+        context.getMessageSystem().start();
+
+
     }
 
 

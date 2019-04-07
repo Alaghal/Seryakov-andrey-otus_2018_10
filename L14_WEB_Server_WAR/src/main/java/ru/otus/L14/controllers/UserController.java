@@ -10,8 +10,6 @@ import org.springframework.web.servlet.view.RedirectView;
 import ru.otus.L14.services.UserService;
 import ru.otus.l10.orm.users.MyUser;
 import ru.otus.l11.hibernate.RepositoryImp;
-import ru.otus.l15.messageSystem.MessageSystemContext;
-import ru.otus.l15.messageSystem.entity.Address;
 //import ru.otus.l10.orm.users.MyUser;
 //import ru.otus.l11.hibernate.RepositoryImp;
 
@@ -21,10 +19,7 @@ import java.util.List;
 @Controller
 public class UserController {
 
-  //  private final Address address;
-  //  private final MessageSystemContext context;
     private final UserService service;
-
 
     public UserController(UserService service) {
         this.service = service;
