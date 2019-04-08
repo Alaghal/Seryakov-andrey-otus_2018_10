@@ -49,8 +49,8 @@ public class MyParser implements ParserObjects {
         List<Object> list = new ArrayList<>();
         Map<String, Object> mapFieldList = new HashMap<>();
         for (var value : inputIterableObject) {
-            Map<String, Object> elemtList = reverseObjectForMap( value );
-            list.add( elemtList );
+            Map<String, Object> elementList = reverseObjectForMap( value );
+            list.add( elementList );
         }
         mapFieldList.put( nameKey, list );
         return mapFieldList;
@@ -59,9 +59,9 @@ public class MyParser implements ParserObjects {
 
     private Object[] convertObjectToArray(Object inputObject) {
 
-        var lenghtArray = Array.getLength( inputObject );
-        Object[] array = new Object[lenghtArray];
-        for (int i = 0; i < lenghtArray; i++) {
+        var lengthArray = Array.getLength( inputObject );
+        Object[] array = new Object[lengthArray];
+        for (int i = 0; i < lengthArray; i++) {
             array[i] = Array.get( inputObject, i );
         }
         return array;
