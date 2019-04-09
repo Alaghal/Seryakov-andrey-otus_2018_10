@@ -13,6 +13,7 @@ import ru.otus.l11.hibernate.RepositoryImp;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -24,7 +25,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         MyUser user = new MyUser( "admin","qwerty" );
         service.saveUserToDB( user );
 
-        user =service.getUserOfLogin( "admin" );
+        try {
+            user =service.getUserOfLogin( "admin" );
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Set<GrantedAuthority> roles = new HashSet();
         roles.add(new SimpleGrantedAuthority( UserRoleEnum.USER.name()));

@@ -1,24 +1,20 @@
 package ru.otus.L14.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.otus.L14.messages.MessageGetUserOfLogin;
 import ru.otus.L14.messages.MessageGetUsers;
 import ru.otus.L14.messages.MessageSaveUser;
 import ru.otus.l10.orm.users.MyUser;
+import ru.otus.l11.entity.Address;
 import ru.otus.l11.hibernate.RepositoryImp;
 import ru.otus.l15.messageSystem.FrontendService;
 import ru.otus.l15.messageSystem.MessageSystemContext;
-import ru.otus.l15.messageSystem.entity.Address;
-import ru.otus.l15.messageSystem.entity.Addressee;
 import ru.otus.l15.messageSystem.entity.Message;
 import ru.otus.l15.messageSystem.entity.MessageSystem;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Service

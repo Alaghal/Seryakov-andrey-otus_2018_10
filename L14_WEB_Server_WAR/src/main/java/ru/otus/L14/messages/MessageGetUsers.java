@@ -1,9 +1,9 @@
 package ru.otus.L14.messages;
 
 import ru.otus.l10.orm.users.MyUser;
+import ru.otus.l11.entity.Address;
 import ru.otus.l15.messageSystem.DBService;
 import ru.otus.l15.messageSystem.MsgToDB;
-import ru.otus.l15.messageSystem.entity.Address;
 
 import java.util.List;
 

@@ -1,5 +1,8 @@
 package ru.otus.l15.messageSystem.entity;
 
+import ru.otus.l11.entity.Address;
+import ru.otus.l11.entity.Addressee;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

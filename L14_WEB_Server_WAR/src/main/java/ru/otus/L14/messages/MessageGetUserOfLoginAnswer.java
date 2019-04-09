@@ -1,9 +1,9 @@
 package ru.otus.L14.messages;
 
 import ru.otus.l10.orm.users.MyUser;
+import ru.otus.l11.entity.Address;
 import ru.otus.l15.messageSystem.FrontendService;
 import ru.otus.l15.messageSystem.MsgToFrontend;
-import ru.otus.l15.messageSystem.entity.Address;
 
 public class MessageGetUserOfLoginAnswer extends MsgToFrontend {
     private final MyUser user;

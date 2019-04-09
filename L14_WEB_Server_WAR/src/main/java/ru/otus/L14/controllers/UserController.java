@@ -15,6 +15,7 @@ import ru.otus.l11.hibernate.RepositoryImp;
 
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Controller
 public class UserController {
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping({"/","/user/list"})
-    public String userList(Model model) {
+    public String userList(Model model) throws ExecutionException, InterruptedException {
         List<MyUser> users = service.getUsers();
         model.addAttribute("users", users);
         return "userList.html";

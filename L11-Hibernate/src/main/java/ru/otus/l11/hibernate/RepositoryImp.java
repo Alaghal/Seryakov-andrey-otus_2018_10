@@ -1,6 +1,6 @@
 package ru.otus.l11.hibernate;
 
-import ru.otus.l15.messageSystem.entity.Addressee;
+import ru.otus.l11.entity.Addressee;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-import ru.otus.l15.messageSystem.entity.Address;
+import ru.otus.l11.entity.Address;
 import ru.otus.l15.messageSystem.entity.MessageSystem;
 
 import javax.persistence.NoResultException;
