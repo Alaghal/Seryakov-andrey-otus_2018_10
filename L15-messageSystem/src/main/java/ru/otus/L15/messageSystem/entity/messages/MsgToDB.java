@@ -1,9 +1,9 @@
-package ru.otus.l15.messageSystem;
+package ru.otus.L15.messageSystem.entity.messages;
 
 
-import ru.otus.l11.entity.Address;
-import ru.otus.l11.entity.Addressee;
-import ru.otus.l15.messageSystem.entity.Message;
+import ru.otus.L15.messageSystem.DBService;
+import ru.otus.L15.messageSystem.entity.Address;
+import ru.otus.L15.messageSystem.entity.Addressee;
 
 /**
  * Created by tully.

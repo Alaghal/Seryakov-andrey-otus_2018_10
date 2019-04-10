@@ -1,6 +1,7 @@
 package ru.otus.L14.services;
 
-import ru.otus.l15.messageSystem.entity.MessageSystem;
+
+import ru.otus.L15.messageSystem.MessageSystem;
 
 public interface MessageSystemProviderService {
 

@@ -1,6 +1,8 @@
 package ru.otus.L14.controllers;
 
 
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.otus.L14.services.UserService;
 import ru.otus.l10.orm.users.MyUser;
-import ru.otus.l11.hibernate.RepositoryImp;
 //import ru.otus.l10.orm.users.MyUser;
 //import ru.otus.l11.hibernate.RepositoryImp;
 
@@ -26,11 +27,19 @@ public class UserController {
         this.service = service;
     }
 
+    @MessageMapping("user/SaveUser")
+    @SendTo("/topic/response")
+    public MyUser send(MyUser user)  {
+        service.saveUserToDB( user );
+        return user;
+    }
+
+
     @GetMapping({"/","/user/list"})
     public String userList(Model model) throws ExecutionException, InterruptedException {
         List<MyUser> users = service.getUsers();
         model.addAttribute("users", users);
-        return "userList.html";
+        return "userMenu.html";
     }
 
     @GetMapping("/user/create")

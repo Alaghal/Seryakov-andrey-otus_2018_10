@@ -1,14 +1,15 @@
 package ru.otus.L14.services;
 
-import ru.otus.l11.entity.Address;
-import ru.otus.l15.messageSystem.MessageSystemContext;
-import ru.otus.l15.messageSystem.entity.MessageSystem;
+
+import ru.otus.L15.messageSystem.MessageSystem;
+import ru.otus.L15.messageSystem.MessageSystemContext;
+import ru.otus.L15.messageSystem.entity.Address;
 
 public interface MessgeSystemContextService {
-    public MessageSystemContext getMessageSystemContext();
-    public MessageSystem getMessageSystem();
-    public Address getFrontAddress();
-    public void setFrontAddress(Address address);
-    public Address getDbAddress();
-    public void setDbAddress(Address address);
+     MessageSystemContext getMessageSystemContext();
+     MessageSystem getMessageSystem();
+     Address getFrontAddress();
+     void setFrontAddress(Address address);
+     Address getDbAddress();
+     void setDbAddress(Address address);
 }

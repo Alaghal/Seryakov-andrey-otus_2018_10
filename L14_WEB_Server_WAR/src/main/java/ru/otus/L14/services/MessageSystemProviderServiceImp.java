@@ -1,7 +1,8 @@
 package ru.otus.L14.services;
 
 import org.springframework.stereotype.Service;
-import ru.otus.l15.messageSystem.entity.MessageSystem;
+import ru.otus.L15.messageSystem.MessageSystem;
+
 
 @Service
 public class MessageSystemProviderServiceImp  implements  MessageSystemProviderService{

@@ -17,7 +17,7 @@ const connect = () => {
     stompClient.connect({}, (frame) => {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/response', (response) => showUsers(JSON.parse(response.body)));
+        stompClient.subscribe('/topic/response', (response) => showUser(JSON.parse(response.body)));
     });
 }
 
@@ -29,11 +29,12 @@ const disconnect = () => {
     console.log("Disconnected");
 }
 
-const sendNewUser = () => stompClient.send("/app/message", {}, JSON.stringify({'login': $("#username").val(),'password':$("#password").val()}))
+const sendNewUser = () => stompClient.send("/user/SaveUser", {}, JSON.stringify({'login': $("#username").val(),'password':$("#password").val()}))
 
+const showUser = (user) =>  $("#UserRow").append("<tr><td>" +user.id + "</td><td>+user.login+</td></tr>")
 
 const showUsers = (Users) =>Users.forEach(user,i,Users)
-{ $("#UserRow").append("<tr><td>" +user.id + "</td><td>+user.login+</td></tr>")}
+{ showUser(user)}
 
 $(function () {
     $("form").on('submit', (event) => {

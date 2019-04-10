@@ -1,10 +1,7 @@
 package ru.otus.l11.hibernate;
-
-import ru.otus.l11.entity.Addressee;
-
 import java.util.List;
 
-public interface RepositoryImp<T> extends Addressee {
+public interface RepositoryImp<T>  {
 
     public T load(long id, Class<T> clazz);
     public  void save(T object );

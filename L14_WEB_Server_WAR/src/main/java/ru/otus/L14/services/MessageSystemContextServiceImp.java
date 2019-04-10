@@ -1,13 +1,14 @@
 package ru.otus.L14.services;
 
 import org.springframework.stereotype.Service;
-import ru.otus.l11.entity.Address;
-import ru.otus.l15.messageSystem.MessageSystemContext;
-import ru.otus.l15.messageSystem.entity.MessageSystem;
+import ru.otus.L15.messageSystem.MessageSystem;
+import ru.otus.L15.messageSystem.MessageSystemContext;
+import ru.otus.L15.messageSystem.entity.Address;
+
 
 @Service
 public class MessageSystemContextServiceImp implements MessgeSystemContextService{
-    private  final  MessageSystemContext context;
+    private  final MessageSystemContext context;
 
     public MessageSystemContextServiceImp(MessageSystemProviderService service) {
         this.context = new MessageSystemContext( service.getMessageSystem());

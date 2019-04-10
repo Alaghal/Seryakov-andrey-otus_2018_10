@@ -1,12 +1,8 @@
-package ru.otus.l15.messageSystem;
+package ru.otus.L15.messageSystem;
 
 
-import ru.otus.l11.entity.Address;
-import ru.otus.l15.messageSystem.entity.MessageSystem;
+import ru.otus.L15.messageSystem.entity.Address;
 
-/**
- * Created by tully.
- */
 public class MessageSystemContext {
     private final MessageSystem messageSystem;
 

@@ -1,7 +1,8 @@
 package ru.otus.L14.services;
 
-import ru.otus.l11.entity.Address;
+
+import ru.otus.L15.messageSystem.entity.Address;
 
 public interface AddressFrontendService {
-    public Address getFrontendAddress();
+    Address getFrontendAddress();
 }

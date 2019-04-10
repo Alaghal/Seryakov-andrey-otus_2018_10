@@ -16,7 +16,7 @@
 
 
     <packaging>war</packaging>
-    <name>L14</name>
+    <name>L14-Spring</name>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -133,12 +133,6 @@
             <artifactId>spring-security-taglibs</artifactId>
             <version>${spring.securiry}</version>
         </dependency>
-        <dependency>
-            <groupId>Seryakov.av.org</groupId>
-            <artifactId>L15-messageserver</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.webjars</groupId>
@@ -175,8 +169,12 @@
             <artifactId>spring-messaging</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>Serykov.av.org</groupId>
+            <artifactId>L15-messageSystem</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
 
     </dependencies>

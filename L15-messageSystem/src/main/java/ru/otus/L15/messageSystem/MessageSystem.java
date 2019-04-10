@@ -1,7 +1,10 @@
-package ru.otus.l15.messageSystem.entity;
+package ru.otus.L15.messageSystem;
 
-import ru.otus.l11.entity.Address;
-import ru.otus.l11.entity.Addressee;
+
+import ru.otus.L15.messageSystem.entity.Address;
+import ru.otus.L15.messageSystem.entity.Addressee;
+import ru.otus.L15.messageSystem.entity.messages.Message;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +18,7 @@ import java.util.logging.Logger;
  * @author tully
  */
 public final class MessageSystem {
-    private final static Logger logger = Logger.getLogger(MessageSystem.class.getName());
+    private final static Logger logger = Logger.getLogger( MessageSystem.class.getName());
     private static final int DEFAULT_STEP_TIME = 10;
 
     private final List<Thread> workers;
