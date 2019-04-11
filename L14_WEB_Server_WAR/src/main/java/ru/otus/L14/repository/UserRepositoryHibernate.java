@@ -1,5 +1,6 @@
 package ru.otus.L14.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.otus.L14.services.AddressDBService;
 import ru.otus.L14.services.EntityPathProviderService;

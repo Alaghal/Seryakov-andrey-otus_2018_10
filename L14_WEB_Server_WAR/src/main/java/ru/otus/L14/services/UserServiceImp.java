@@ -22,18 +22,16 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserServiceImp implements UserService, FrontendService {
-    private RepositoryImp repository;
     private Address address;
     private MessageSystemContext context;
     private Map<String, Object> messagesOperations = new HashMap<>();
     private Object monitor = new Object();
 
 
-    public UserServiceImp(RepositoryImp repository,
-                          AddressFrontendService frontendService,
+    public UserServiceImp(AddressFrontendService frontendService,
                           MessgeSystemContextService messgeSystemContextService,
                           AddressDBService dbService) {
-        this.repository = repository;
+
         this.address = frontendService.getFrontendAddress();
         this.context = messgeSystemContextService.getMessageSystemContext();
         context.setDbAddress( dbService.getAddressDbForUser() );
@@ -47,7 +45,6 @@ public class UserServiceImp implements UserService, FrontendService {
 
     @Override
     public List<MyUser> getUsers() throws ExecutionException, InterruptedException {
-        // List<MyUser> users = repository.getAll(MyUser.class);
         Message message = new MessageGetUsers( context.getFrontAddress(), context.getDbAddress() );
         context.getMessageSystem().sendMessage( message );
 
