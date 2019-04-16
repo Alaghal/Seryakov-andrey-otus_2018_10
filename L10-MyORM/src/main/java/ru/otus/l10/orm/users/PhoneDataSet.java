@@ -15,12 +15,12 @@ public class PhoneDataSet {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = true)
-    private MyUser user;
+    private User user;
 
     public PhoneDataSet() {
     }
 
-    public PhoneDataSet(String number, MyUser user) {
+    public PhoneDataSet(String number, User user) {
         this.number = number;
         this.user = user;
     }
@@ -35,11 +35,11 @@ public class PhoneDataSet {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    public MyUser getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(MyUser user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
