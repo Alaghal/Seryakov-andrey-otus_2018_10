@@ -12,8 +12,7 @@ import ru.otus.L15.messageSystem.entity.messages.Message;
 import ru.otus.L15.messageSystem.entity.messages.MessageGetUserOfLogin;
 import ru.otus.L15.messageSystem.entity.messages.MessageGetUsers;
 import ru.otus.L15.messageSystem.entity.messages.MessageSaveUser;
-import ru.otus.l10.orm.users.MyUser;
-import ru.otus.l11.hibernate.RepositoryImp;
+import ru.otus.l11.entity.MyUser;
 
 import java.util.HashMap;
 import java.util.List;
@@ -82,8 +81,8 @@ public class UserServiceImp implements UserService, FrontendService {
     }
 
     @Override
-    public void saveUserToDB(MyUser user) {
-        Message message = new MessageSaveUser( context.getFrontAddress(), context.getDbAddress(), user );
+    public void saveUserToDB(MyUser myUser) {
+        Message message = new MessageSaveUser( context.getFrontAddress(), context.getDbAddress(), myUser );
         context.getMessageSystem().sendMessage( message );
     }
 

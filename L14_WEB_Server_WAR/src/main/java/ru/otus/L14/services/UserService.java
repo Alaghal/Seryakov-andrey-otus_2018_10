@@ -1,7 +1,7 @@
 package ru.otus.L14.services;
 
 import ru.otus.L15.messageSystem.FrontendService;
-import ru.otus.l10.orm.users.MyUser;
+import ru.otus.l11.entity.MyUser;
 
 
 import java.util.List;

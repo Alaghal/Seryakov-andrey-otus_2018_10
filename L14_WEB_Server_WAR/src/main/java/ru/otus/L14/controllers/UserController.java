@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.otus.L14.services.UserService;
-import ru.otus.l10.orm.users.MyUser;
-//import ru.otus.l10.orm.users.MyUser;
+import ru.otus.l11.entity.MyUser;
+//import ru.otus.l11.entity.MyUser;
 //import ru.otus.l11.hibernate.RepositoryImp;
 
 

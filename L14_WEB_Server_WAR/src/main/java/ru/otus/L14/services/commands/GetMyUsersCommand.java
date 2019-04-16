@@ -1,6 +1,6 @@
 package ru.otus.L14.services.commands;
 
-import ru.otus.l10.orm.users.MyUser;
+import ru.otus.l11.entity.MyUser;
 
 import java.util.List;
 import java.util.Map;
