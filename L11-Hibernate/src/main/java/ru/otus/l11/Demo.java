@@ -1,8 +1,8 @@
 package ru.otus.l11;
 
-import ru.otus.l10.orm.users.AddressDataSet;
-import ru.otus.l10.orm.users.PhoneDataSet;
-import ru.otus.l10.orm.users.MyUser;
+import ru.otus.l11.entity.AddressDataSet;
+import ru.otus.l11.entity.PhoneDataSet;
+import ru.otus.l11.entity.MyUser;
 import ru.otus.l11.hibernate.FactoryRepositories;
 import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
 import ru.otus.l11.hibernate.RepositoryImp;

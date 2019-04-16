@@ -1,4 +1,7 @@
-package ru.otus.l10.orm.users;
+package ru.otus.l11.entity;
+
+import ru.otus.l11.entity.AddressDataSet;
+import ru.otus.l11.entity.PhoneDataSet;
 
 import javax.persistence.*;
 import java.util.ArrayList;
