@@ -1,7 +1,7 @@
 package ru.otus.l12.servieces;
 
 
-import ru.otus.l10.orm.users.MyUser;
+import ru.otus.l11.entity.MyUser;
 import ru.otus.l11.hibernate.RepositoryImp;
 
 import java.util.List;
