@@ -2,7 +2,7 @@ package ru.otus.L15.messageSystem.entity.messages;
 
 import ru.otus.L15.messageSystem.FrontendService;
 import ru.otus.L15.messageSystem.entity.Address;
-import ru.otus.l10.orm.users.MyUser;
+import ru.otus.l11.entity.MyUser;
 
 
 import java.util.List;
