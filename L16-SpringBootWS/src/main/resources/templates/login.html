@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login page</title>
+</head>
+<body>
+<h1>Login page</h1>
+<p th:if="${param.error}">
+    Bad Credentials
+</p>
+<form th:action="@{/appLogin}" method="POST">
+    User Name : <input type="text" name="app_username"/> <br/><br/>
+    Password: <input type="password" name="app_password"/> <br/><br/>
+    <input type="submit" value="Login" />
+</form>
+</body>
+</html>
