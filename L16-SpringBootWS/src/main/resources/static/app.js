@@ -29,11 +29,12 @@ const disconnect = () => {
     console.log("Disconnected");
 }
 
-const sendName = () => stompClient.send("/app/message", {}, JSON.stringify({'messageStr': $("#message").val()}))
+const sendNewUser = () => stompClient.send("/user/SaveUser", {}, JSON.stringify({'login': $("#username").val(),'password':$("#password").val()}))
 
+const showUser = (user) =>  $("#UserRow").append("<tr><td>" +user.id + "</td><td>+user.login+</td></tr>")
 
-const showUsers = (users) => $("#UserRow").append("<tr><td>" + users.login + "</td> <td>+users.password+</td></tr>")
-
+const showUsers = (Users) =>Users.forEach(user,i,Users)
+{ showUser(user)}
 
 $(function () {
     $("form").on('submit', (event) => {
@@ -41,5 +42,5 @@ $(function () {
     });
     $("#connect").click(connect);
     $("#disconnect").click(disconnect);
-    $("#send").click(sendName);
+    $("#send").click(sendNewUser);
 });
