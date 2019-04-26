@@ -2,7 +2,7 @@ package ru.otus.l11;
 
 import ru.otus.l10.orm.users.AddressDataSet;
 import ru.otus.l10.orm.users.PhoneDataSet;
-import ru.otus.l10.orm.users.MyUser;
+import ru.otus.l10.orm.users.User;
 import ru.otus.l11.hibernate.FactoryRepositories;
 import ru.otus.l11.hibernate.FactoryUserRepositoryOfHibernate;
 import ru.otus.l11.hibernate.RepositoryImp;
@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Demo {
-    public static void main(String... arg) throws SQLException {
+    public static void main(String... arg)  {
 
         FactoryRepositories  facoryRepos = new FactoryUserRepositoryOfHibernate();
         RepositoryImp hFunction = facoryRepos.createRepository();
 
-        MyUser userInsert = new MyUser( 1, "Forest", "Gump" );
-        MyUser userUpdate = new MyUser( 1, "Test", "Gump" );
+        User userInsert = new User( 1, "Forest", "Gump" );
+        User userUpdate = new User( 1, "Test", "Gump" );
 
         List<PhoneDataSet> phonesIsert = new ArrayList<>(  );
 
@@ -40,14 +40,14 @@ public class Demo {
 
 
         hFunction.save( userInsert );
-        MyUser userOfInsert = (MyUser) hFunction.load( userInsert.getId(), MyUser.class );
+        User userOfInsert = (User) hFunction.load( userInsert.getId(), User.class );
         hFunction.save( userUpdate );
-        MyUser userOfUpdate = (MyUser) hFunction.load( userUpdate.getId(), MyUser.class );
-         userOfUpdate = (MyUser)hFunction.getByValue( "name","Forest", MyUser.class );
+        User userOfUpdate = (User) hFunction.load( userUpdate.getId(), User.class );
+         userOfUpdate = (User)hFunction.getByValue( "name","Forest", User.class );
         System.out.println( "Insert user " + userOfInsert.getName() );
         System.out.println( "Update user " + userOfUpdate.getId() );
 
-        List<MyUser> list = (List<MyUser>) hFunction.getAll( MyUser.class);
+        List<User> list = (List<User>) hFunction.getAll( User.class);
 
         for (var itrm:list) {
             System.out.println( itrm.getName() + itrm.getId() );

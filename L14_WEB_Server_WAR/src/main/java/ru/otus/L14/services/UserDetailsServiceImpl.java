@@ -1,6 +1,6 @@
 package ru.otus.L14.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.otus.L14.entity.enums.UserRoleEnum;
-import ru.otus.l10.orm.users.MyUser;
-import ru.otus.l11.hibernate.RepositoryImp;
+import ru.otus.l10.orm.users.User;
+//import ru.otus.l11.entity.User;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        MyUser user = new MyUser( "admin","qwerty" );
+        User user = new User( "admin","qwerty" );
         service.saveUserToDB( user );
 
         user =service.getUserOfLogin( "admin" );

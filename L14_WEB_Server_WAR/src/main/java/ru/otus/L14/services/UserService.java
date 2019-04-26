@@ -1,12 +1,13 @@
 package ru.otus.L14.services;
 
-import ru.otus.l10.orm.users.MyUser;
+
+import ru.otus.l11.hibernate.entity.MyUser;
 
 import java.util.List;
 
 public interface UserService {
-    public List<MyUser> getUsers();
-    public MyUser getUserOfLogin(String login);
-    public void saveUserToDB(MyUser user);
+    List<MyUser> getUsers();
+    MyUser getUserOfLogin(String login);
+    void saveUserToDB(MyUser user);
 
 }

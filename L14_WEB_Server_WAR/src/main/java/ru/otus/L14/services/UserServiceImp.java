@@ -1,10 +1,9 @@
 package ru.otus.L14.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.otus.l10.orm.users.MyUser;
 import ru.otus.l11.hibernate.RepositoryImp;
+import ru.otus.l11.hibernate.entity.MyUser;
+
 
 import java.util.List;
 
@@ -21,13 +20,13 @@ public class UserServiceImp implements UserService {
 
     @Override
     public List<MyUser> getUsers() {
-        List<MyUser> users = repository.getAll(MyUser.class);
+        List<MyUser> users = repository.getAll( MyUser.class);
         return  users;
     }
 
     @Override
     public MyUser getUserOfLogin(String login) {
-        MyUser user=(MyUser) repository.getByValue( "login",login,MyUser.class );
+        MyUser user=(MyUser) repository.getByValue( "login",login, MyUser.class );
         return user;
     }
 

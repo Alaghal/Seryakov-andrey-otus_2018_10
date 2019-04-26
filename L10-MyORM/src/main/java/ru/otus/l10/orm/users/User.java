@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class MyUser {
+public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private  long id;
@@ -22,35 +22,35 @@ public class MyUser {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<PhoneDataSet> phones= new ArrayList<>(  );
 
-    public MyUser(){}
+    public User(){}
 
-    public MyUser(String login, String password){
+    public User(String login, String password){
         this.login = login;
         this.password=password;
     }
 
-    public MyUser(long id, String name, String secondName){
+    public User(long id, String name, String secondName){
         this.id = id;
         this.name = name;
         this.secondName = secondName;
 
     }
     
-    public MyUser( String name, String secondName, String login, String password){
+    public User(String name, String secondName, String login, String password){
         this.name = name;
         this.secondName = secondName;
         this.password=password;
         this.login = login;
     }
 
-    public MyUser(long id, String name, String secondName, String login, String password){
+    public User(long id, String name, String secondName, String login, String password){
         this.id = id;
         this.name = name;
         this.secondName = secondName;
         this.password=password;
         this.login = login;
     }
-    public MyUser(long id, String name, String secondName, AddressDataSet address, List<PhoneDataSet> phones) {
+    public User(long id, String name, String secondName, AddressDataSet address, List<PhoneDataSet> phones) {
         this.id=id;
         this.name = name;
         this.secondName = secondName;
@@ -110,7 +110,7 @@ public class MyUser {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder("MyUser{"  );
+        StringBuilder stringBuilder = new StringBuilder("User{"  );
         stringBuilder.append( "id=" + getId() );
         stringBuilder.append(  ", Name='" + getName()+ '\'');
         stringBuilder.append(  ", Login='" + getLogin()+ '\'');

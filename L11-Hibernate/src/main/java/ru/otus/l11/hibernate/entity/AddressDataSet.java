@@ -1,7 +1,10 @@
-package ru.otus.l10.orm.users;
+package ru.otus.l11.hibernate.entity;
+
+
 
 import javax.persistence.*;
 import java.util.Objects;
+
 @Entity
 @Table(name = "addressDataSet")
 public class AddressDataSet {
@@ -14,10 +17,10 @@ public class AddressDataSet {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = true)
-    private User user;
+    private MyUser user;
 
     public AddressDataSet(){}
-    public AddressDataSet(String street, User user) {
+    public AddressDataSet(String street, MyUser user) {
         this.street = street;
         this.user=user;
     }
@@ -38,11 +41,11 @@ public class AddressDataSet {
         this.id = id;
     }
 
-    public User getUser() {
+    public MyUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(MyUser user) {
         this.user = user;
     }
     @Override

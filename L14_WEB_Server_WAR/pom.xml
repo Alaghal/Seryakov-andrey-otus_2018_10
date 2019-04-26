@@ -103,13 +103,6 @@
         </dependency>
 
         <dependency>
-            <groupId>Seryakov.av.org</groupId>
-            <artifactId>L11-Hibernate</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
             <version>${spring.securiry}</version>
@@ -131,6 +124,11 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
             <version>${spring.securiry}</version>
+        </dependency>
+        <dependency>
+            <groupId>Seryakov.av.org</groupId>
+            <artifactId>L11-Hibernate</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
